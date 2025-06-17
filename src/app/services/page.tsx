@@ -1,10 +1,21 @@
+import { Metadata } from "next"
 import MainLayout from "@/components/layout/MainLayout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: "서비스",
+  description: "웹 개발, 모바일 앱 개발, 클라우드 인프라, AI 솔루션 등 GanziCorp의 전문 기술 서비스를 소개합니다.",
+  openGraph: {
+    title: "서비스 - GanziCorp",
+    description: "웹 개발, 모바일 앱 개발, 클라우드 인프라, AI 솔루션 등 전문 기술 서비스를 제공합니다.",
+    url: "https://ganzicorp.com/services",
+  },
+}
 import { 
   Code, 
-  Palette, 
   Cloud, 
   Brain, 
   Smartphone, 
@@ -17,46 +28,52 @@ import {
 export default function ServicesPage() {
   const services = [
     {
+      slug: "web-development",
       icon: Code,
       title: "웹 개발",
-      description: "현대적이고 반응형인 웹 애플리케이션 개발",
+      description: "현대적이고 반응형인 웹 애플리케이션을 개발합니다. React, Next.js, TypeScript 등 최신 기술을 활용합니다.",
       features: ["React/Next.js", "TypeScript", "Tailwind CSS", "API 개발"],
       color: "bg-blue-500/10 text-blue-600"
     },
     {
+      slug: "mobile-development",
       icon: Smartphone,
       title: "모바일 앱 개발",
-      description: "iOS/Android 네이티브 및 크로스플랫폼 앱 개발",
+      description: "iOS와 Android를 지원하는 크로스플랫폼 모바일 애플리케이션을 개발합니다.",
       features: ["React Native", "Flutter", "네이티브 개발", "앱스토어 배포"],
       color: "bg-green-500/10 text-green-600"
     },
     {
+      slug: "cloud-infrastructure",
       icon: Cloud,
       title: "클라우드 인프라",
-      description: "확장 가능하고 안정적인 클라우드 인프라 구축",
+      description: "AWS, Azure, GCP를 활용한 확장 가능하고 안정적인 클라우드 인프라를 구축합니다.",
       features: ["AWS/Azure", "Docker", "Kubernetes", "CI/CD"],
       color: "bg-purple-500/10 text-purple-600"
     },
     {
+      slug: "ai-solutions",
       icon: Brain,
-      title: "AI/ML 솔루션",
-      description: "인공지능과 머신러닝을 활용한 스마트 솔루션",
-      features: ["자연어 처리", "컴퓨터 비전", "예측 분석", "챗봇"],
+      title: "AI 솔루션",
+      description: "머신러닝과 인공지능 기술을 활용한 맞춤형 비즈니스 솔루션을 제공합니다.",
+      features: ["머신러닝", "자연어 처리", "컴퓨터 비전", "예측 분석"],
       color: "bg-orange-500/10 text-orange-600"
     },
     {
+      slug: "database-optimization",
       icon: Database,
-      title: "데이터베이스 설계",
-      description: "효율적이고 확장 가능한 데이터베이스 아키텍처",
-      features: ["관계형 DB", "NoSQL", "데이터 마이그레이션", "성능 최적화"],
-      color: "bg-red-500/10 text-red-600"
+      title: "데이터베이스 최적화",
+      description: "데이터베이스 성능 분석과 최적화를 통해 시스템 효율성을 극대화합니다.",
+      features: ["성능 튜닝", "쿼리 최적화", "스키마 설계", "백업 전략"],
+      color: "bg-cyan-500/10 text-cyan-600"
     },
     {
+      slug: "security-consulting",
       icon: Shield,
       title: "보안 컨설팅",
-      description: "종합적인 보안 감사 및 취약점 분석",
-      features: ["보안 감사", "취약점 분석", "보안 정책", "규정 준수"],
-      color: "bg-indigo-500/10 text-indigo-600"
+      description: "웹 애플리케이션과 시스템의 보안 취약점을 분석하고 개선 방안을 제시합니다.",
+      features: ["보안 감사", "취약점 분석", "보안 정책", "컴플라이언스"],
+      color: "bg-red-500/10 text-red-600"
     }
   ]
 
@@ -131,9 +148,11 @@ export default function ServicesPage() {
                       </li>
                     ))}
                   </ul>
-                  <Button variant="ghost" className="w-full mt-4 group-hover:bg-primary/10">
-                    자세히 보기
-                    <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  <Button asChild variant="ghost" className="w-full mt-4 group-hover:bg-primary/10">
+                    <Link href={`/services/${service.slug || service.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>
+                      자세히 보기
+                      <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>

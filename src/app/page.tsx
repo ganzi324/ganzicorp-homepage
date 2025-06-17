@@ -1,10 +1,20 @@
 import React from 'react';
-
+import { Metadata } from 'next';
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import MainLayout from "@/components/layout/MainLayout";
+
+export const metadata: Metadata = {
+  title: "홈",
+  description: "GanziCorp는 혁신적인 기술로 미래를 만들어가는 회사입니다. 차세대 솔루션으로 비즈니스의 새로운 가능성을 열어갑니다.",
+  openGraph: {
+    title: "GanziCorp - 혁신적인 기술 솔루션",
+    description: "혁신적인 기술로 미래를 만들어가는 회사, 차세대 솔루션으로 비즈니스의 새로운 가능성을 열어갑니다.",
+    url: "https://ganzicorp.com",
+  },
+};
 
 export default function HomePage() {
   return (

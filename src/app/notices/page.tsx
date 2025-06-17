@@ -1,15 +1,26 @@
+import { Metadata } from "next"
 import MainLayout from "@/components/layout/MainLayout"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: "공지사항",
+  description: "GanziCorp의 최신 소식과 공지사항을 확인하세요. 새로운 서비스 출시, 기술 세미나, 회사 소식 등을 안내합니다.",
+  openGraph: {
+    title: "공지사항 - GanziCorp",
+    description: "GanziCorp의 최신 소식과 공지사항을 확인하세요.",
+    url: "https://ganzicorp.com/notices",
+  },
+}
 import { 
   Search,
   Calendar,
   Eye,
   Pin,
-  ArrowRight,
-  Filter
+  ArrowRight
 } from "lucide-react"
 
 export default function NoticesPage() {
@@ -146,7 +157,7 @@ export default function NoticesPage() {
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="space-y-4">
-            {notices.map((notice, index) => (
+            {notices.map((notice, _index) => (
               <Card key={notice.id} className="hover-lift group">
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between">
@@ -189,9 +200,11 @@ export default function NoticesPage() {
                           </div>
                         </div>
                         
-                        <Button variant="ghost" size="sm" className="group-hover:bg-primary/10">
-                          자세히 보기
-                          <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                        <Button asChild variant="ghost" size="sm" className="group-hover:bg-primary/10">
+                          <Link href={`/notices/${notice.id}`}>
+                            자세히 보기
+                            <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                          </Link>
                         </Button>
                       </div>
                     </div>

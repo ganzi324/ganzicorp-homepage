@@ -1,7 +1,18 @@
+import { Metadata } from "next"
 import MainLayout from "@/components/layout/MainLayout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Users, Target, Award, Lightbulb } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: "회사 소개",
+  description: "GanziCorp의 비전, 미션, 핵심 가치와 팀을 소개합니다. 혁신적인 기술로 고객의 성공을 지원하는 전문 기술 회사입니다.",
+  openGraph: {
+    title: "회사 소개 - GanziCorp",
+    description: "GanziCorp의 비전, 미션, 핵심 가치와 팀을 소개합니다.",
+    url: "https://ganzicorp.com/about",
+  },
+}
 
 export default function AboutPage() {
   const values = [

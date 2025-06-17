@@ -1,9 +1,20 @@
+import { Metadata } from "next"
 import MainLayout from "@/components/layout/MainLayout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+
+export const metadata: Metadata = {
+  title: "문의하기",
+  description: "GanziCorp에 프로젝트 문의나 상담을 요청하세요. 전문가가 신속하고 정확한 답변을 드립니다.",
+  openGraph: {
+    title: "문의하기 - GanziCorp",
+    description: "프로젝트 문의나 상담을 요청하세요. 전문가가 신속하고 정확한 답변을 드립니다.",
+    url: "https://ganzicorp.com/contact",
+  },
+}
 import { Label } from "@/components/ui/label"
 import { 
   Mail, 
