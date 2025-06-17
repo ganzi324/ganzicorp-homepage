@@ -17,6 +17,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        // Shadcn/ui base colors
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -50,6 +51,20 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        // GanziCorp custom brand colors
+        ganzicorp: {
+          primary: '#1E40AF',      // Deep blue
+          secondary: '#3B82F6',    // Medium blue  
+          accent: '#60A5FA',       // Light blue
+          dark: '#1E293B',         // Dark slate
+          light: '#F8FAFC',        // Very light gray
+          success: '#10B981',      // Green
+          warning: '#F59E0B',      // Amber
+          error: '#EF4444',        // Red
+        },
+        // Gradients
+        'gradient-start': '#1E40AF',
+        'gradient-end': '#3B82F6',
       },
       borderRadius: {
         lg: 'var(--radius)',

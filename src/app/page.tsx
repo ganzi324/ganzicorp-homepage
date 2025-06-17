@@ -2,21 +2,30 @@ import React from 'react';
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          GanziCorp에 오신 것을 환영합니다
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 gradient-bg">
+      <div className="text-center max-w-4xl mx-auto">
+        <h1 className="text-6xl font-bold text-white mb-6">
+          <span className="block">GanziCorp에</span>
+          <span className="block gradient-text bg-white text-transparent bg-clip-text">
+            오신 것을 환영합니다
+          </span>
         </h1>
-        <p className="text-xl text-gray-600 mb-8">
-          혁신적인 기술로 미래를 만들어가는 회사
+        <p className="text-xl text-ganzicorp-light/90 mb-12 leading-relaxed">
+          혁신적인 기술로 미래를 만들어가는 회사<br/>
+          차세대 솔루션으로 비즈니스의 새로운 가능성을 열어갑니다
         </p>
-        <div className="flex gap-4 justify-center">
-          <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-            서비스 보기
+        <div className="flex gap-6 justify-center flex-wrap">
+          <button className="px-8 py-4 bg-white text-ganzicorp-primary rounded-lg hover-lift card-shadow hover:shadow-lg transition-all duration-300 font-semibold">
+            서비스 살펴보기
           </button>
-          <button className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+          <button className="px-8 py-4 border-2 border-white text-white rounded-lg hover:bg-white hover:text-ganzicorp-primary transition-all duration-300 font-semibold">
             문의하기
           </button>
+        </div>
+        <div className="mt-16">
+          <p className="text-ganzicorp-light/70 text-sm">
+            🚀 최신 기술 • 💡 혁신적 사고 • 🤝 신뢰할 수 있는 파트너
+          </p>
         </div>
       </div>
     </main>
