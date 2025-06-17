@@ -4,13 +4,24 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
-import { Menu, X } from 'lucide-react'
+import { useAuth } from '@/components/auth/AuthProvider'
+import { Menu, X, User, LogOut, Settings } from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
   const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const { user, userProfile, signOut, isAdmin, loading } = useAuth()
 
   const navigation = [
     { name: '홈', href: '/' },
@@ -63,6 +74,26 @@ export default function Header() {
     return pathname.startsWith(href)
   }
 
+  const handleSignOut = async () => {
+    await signOut()
+    setIsMobileMenuOpen(false)
+  }
+
+  const getUserInitials = () => {
+    if (userProfile?.full_name) {
+      return userProfile.full_name
+        .split(' ')
+        .map(name => name[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2)
+    }
+    if (user?.email) {
+      return user.email[0].toUpperCase()
+    }
+    return 'U'
+  }
+
   return (
     <header className={`bg-white border-b border-gray-200 sticky top-0 z-50 transition-all duration-300 ${
       isScrolled ? 'shadow-lg backdrop-blur-sm bg-white/95' : 'shadow-md'
@@ -101,11 +132,70 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* 데스크톱 CTA 버튼 */}
-          <div className="hidden md:flex">
-            <Button asChild className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200">
-              <Link href="/contact">무료 상담</Link>
-            </Button>
+          {/* 데스크톱 우측 버튼들 */}
+          <div className="hidden md:flex items-center space-x-4">
+            {!loading && (
+              <>
+                {user ? (
+                  <div className="flex items-center space-x-3">
+                    {isAdmin && (
+                      <Button asChild variant="outline" size="sm">
+                        <Link href="/admin">관리자</Link>
+                      </Button>
+                    )}
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                          <Avatar className="h-8 w-8">
+                            <AvatarImage src={user.user_metadata?.avatar_url} alt="Profile" />
+                            <AvatarFallback>{getUserInitials()}</AvatarFallback>
+                          </Avatar>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56" align="end" forceMount>
+                        <DropdownMenuLabel className="font-normal">
+                          <div className="flex flex-col space-y-1">
+                            <p className="text-sm font-medium leading-none">
+                              {userProfile?.full_name || user.email}
+                            </p>
+                            <p className="text-xs leading-none text-muted-foreground">
+                              {user.email}
+                            </p>
+                          </div>
+                        </DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem asChild>
+                          <Link href="/profile" className="cursor-pointer">
+                            <User className="mr-2 h-4 w-4" />
+                            <span>프로필</span>
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/settings" className="cursor-pointer">
+                            <Settings className="mr-2 h-4 w-4" />
+                            <span>설정</span>
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+                          <LogOut className="mr-2 h-4 w-4" />
+                          <span>로그아웃</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                ) : (
+                  <div className="flex items-center space-x-2">
+                    <Button asChild variant="ghost" size="sm">
+                      <Link href="/auth/login">로그인</Link>
+                    </Button>
+                    <Button asChild className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200">
+                      <Link href="/auth/signup">회원가입</Link>
+                    </Button>
+                  </div>
+                )}
+              </>
+            )}
           </div>
 
           {/* 모바일 메뉴 버튼 */}
@@ -148,13 +238,70 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
-            <div className="px-3 py-2">
-              <Button asChild className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200">
-                <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                  무료 상담
-                </Link>
-              </Button>
-            </div>
+            
+            {/* 모바일 인증 관련 메뉴 */}
+            {!loading && (
+              <>
+                {user ? (
+                  <>
+                    <div className="px-3 py-2 border-t border-gray-200">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src={user.user_metadata?.avatar_url} alt="Profile" />
+                          <AvatarFallback>{getUserInitials()}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {userProfile?.full_name || user.email}
+                          </p>
+                          <p className="text-xs text-gray-500 truncate">
+                            {user.email}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {isAdmin && (
+                        <Link
+                          href="/admin"
+                          className="block px-3 py-2 rounded-md text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200 font-medium mb-1"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          관리자
+                        </Link>
+                      )}
+                      
+                      <Link
+                        href="/profile"
+                        className="block px-3 py-2 rounded-md text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200 font-medium"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        프로필
+                      </Link>
+                      
+                      <button
+                        onClick={handleSignOut}
+                        className="block w-full text-left px-3 py-2 rounded-md text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200 font-medium"
+                      >
+                        로그아웃
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="px-3 py-2 space-y-2 border-t border-gray-200">
+                    <Button asChild variant="ghost" className="w-full justify-start">
+                      <Link href="/auth/login" onClick={() => setIsMobileMenuOpen(false)}>
+                        로그인
+                      </Link>
+                    </Button>
+                    <Button asChild className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200">
+                      <Link href="/auth/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                        회원가입
+                      </Link>
+                    </Button>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
 
