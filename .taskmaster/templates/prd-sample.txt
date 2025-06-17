@@ -1,0 +1,71 @@
+[Project Name]
+GanziCorp Homepage
+
+[Project Goal]
+간단한 회사 홈페이지를 개발한다. 관리자 로그인 기능, 게시판, 문의하기 및 답변 기능을 포함한다.  
+Supabase 무료 티어만 활용하여, 비용 없이 운영 가능하도록 구성한다.  
+
+[Key Features]
+
+1. [정적 페이지 구성]
+- /            : 회사 메인 페이지 (로고, 슬로건, CTA)
+- /about       : 회사 소개(회사 대표, 연혁, 비전 등)
+- /services    : 서비스 소개(5개 서비스에 대한 이미지와 설명 글)
+- /team        : 조직 구성(이미지)
+- /notice      : 공지사항 목록 및 상세
+- /contact     : 문의하기 폼
+
+2. [동적 기능]
+- 관리자 로그인 (Supabase Auth 사용)
+- 관리자 전용 대시보드 (/admin)
+  - 공지사항 CRUD
+  - 문의글 리스트 조회
+  - 문의글에 대한 답변 작성
+
+3. [DB 테이블 - Supabase 사용]
+- notices
+  - id (uuid, pk)
+  - title (text)
+  - content (text)
+  - created_at (timestamp)
+  - updated_at (timestamp)
+- inquiries
+  - id (uuid, pk)
+  - name (text)
+  - email (text)
+  - message (text)
+  - answer (text, nullable)
+  - created_at (timestamp)
+  - answered_at (timestamp, nullable)
+
+4. [인증]
+- 관리자 계정 로그인만 필요
+- Supabase Auth 사용
+- 계정 정보 예시:
+  - email: admin@testcorp.com
+  - password: testadmin123
+
+5. [문의 작성 처리]
+- 누구나 /contact 페이지에서 문의 작성 가능
+- Supabase REST API 통해 `inquiries` 테이블에 저장
+- 관리자만 답변 가능
+
+6. [UI/디자인]
+- Tailwind CSS + Shadcn UI
+- 이미지/로고는 임의의 더미 이미지 사용
+- 반응형 지원
+
+7. [배포]
+- Vercel : github 연동
+- github : `ganzi-homepage` repository 생성 필요(private)
+
+[Technology Stack]
+- Next.js (App Router)
+- Supabase (Auth, DB)
+- Tailwind CSS, Shadcn UI
+- Vercel (배포)
+
+[Additional Notes]
+- 관리자 외 사용자 인증은 없음
+- 콘텐츠나 이미지는 모두 자유롭게 구성 가능 (테스트용)
+- 성능, 확장성보다는 빠른 프로토타입 구축이 목적
