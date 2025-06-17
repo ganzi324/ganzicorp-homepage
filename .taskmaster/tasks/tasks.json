@@ -1313,8 +1313,8 @@
               1,
               2
             ],
-            "details": "Install Shadcn UI via the CLI, initialize it in the project, and set up the necessary configuration files",
-            "status": "pending"
+            "details": "Install Shadcn UI via the CLI, initialize it in the project, and set up the necessary configuration files\n<info added on 2025-06-17T05:41:40.277Z>\nShadcn UI 설치 및 설정 완료:\n- shadcn@latest CLI로 프로젝트 초기화 (New York 스타일, Neutral 색상)\n- components.json 설정 파일 생성 (경로 별칭, 아이콘 라이브러리 설정)\n- src/lib/utils.ts 유틸리티 함수 생성 (cn 함수)\n- Button, Card 컴포넌트 설치 및 테스트\n- 홈페이지에서 Shadcn UI 컴포넌트 동작 확인\n- 개발 서버 정상 실행 (localhost:3001)\n</info added on 2025-06-17T05:41:40.277Z>",
+            "status": "done"
           },
           {
             "id": 4,
@@ -2439,7 +2439,7 @@
     ],
     "metadata": {
       "created": "2025-06-17T03:27:33.165Z",
-      "updated": "2025-06-17T05:33:18.581Z",
+      "updated": "2025-06-17T05:41:49.319Z",
       "description": "Development working tag - corresponds to develop Git branch"
     }
   }

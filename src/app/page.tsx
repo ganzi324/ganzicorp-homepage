@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { Button } from "@/components/ui/button";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
 export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 gradient-bg">
@@ -15,17 +18,42 @@ export default function HomePage() {
           차세대 솔루션으로 비즈니스의 새로운 가능성을 열어갑니다
         </p>
         <div className="flex gap-6 justify-center flex-wrap">
-          <button className="px-8 py-4 bg-white text-ganzicorp-primary rounded-lg hover-lift card-shadow hover:shadow-lg transition-all duration-300 font-semibold">
+          <Button size="lg" className="bg-white text-ganzicorp-primary hover:bg-ganzicorp-light font-semibold hover-lift">
             서비스 살펴보기
-          </button>
-          <button className="px-8 py-4 border-2 border-white text-white rounded-lg hover:bg-white hover:text-ganzicorp-primary transition-all duration-300 font-semibold">
+          </Button>
+          <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-ganzicorp-primary font-semibold">
             문의하기
-          </button>
+          </Button>
         </div>
-        <div className="mt-16">
-          <p className="text-ganzicorp-light/70 text-sm">
-            🚀 최신 기술 • 💡 혁신적 사고 • 🤝 신뢰할 수 있는 파트너
-          </p>
+        
+        {/* Shadcn UI Card 컴포넌트 테스트 */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="bg-white/10 border-white/20 hover-lift">
+            <CardHeader>
+              <CardTitle className="text-white">🚀 최신 기술</CardTitle>
+              <CardDescription className="text-ganzicorp-light/80">
+                최첨단 기술 스택으로 혁신적인 솔루션을 제공합니다
+              </CardDescription>
+            </CardHeader>
+          </Card>
+          
+          <Card className="bg-white/10 border-white/20 hover-lift">
+            <CardHeader>
+              <CardTitle className="text-white">💡 혁신적 사고</CardTitle>
+              <CardDescription className="text-ganzicorp-light/80">
+                창의적인 아이디어로 새로운 가치를 창출합니다
+              </CardDescription>
+            </CardHeader>
+          </Card>
+          
+          <Card className="bg-white/10 border-white/20 hover-lift">
+            <CardHeader>
+              <CardTitle className="text-white">🤝 신뢰할 수 있는 파트너</CardTitle>
+              <CardDescription className="text-ganzicorp-light/80">
+                고객과 함께 성장하는 장기적인 파트너십을 구축합니다
+              </CardDescription>
+            </CardHeader>
+          </Card>
         </div>
       </div>
     </main>
