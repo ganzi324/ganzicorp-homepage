@@ -1,24 +1,22 @@
+import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import MainLayout from "@/components/layout/MainLayout"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { 
-  ArrowLeft,
+  Code, 
+  Smartphone, 
+  Cloud,
+  ArrowRight,
   CheckCircle,
+  ArrowLeft,
   Clock,
   Star,
   Users,
-  Zap,
-  ArrowRight,
-  Code,
-  Smartphone,
-  Cloud,
-  Brain,
-  Database,
-  Shield
-} from "lucide-react"
-import Link from "next/link"
-import { notFound } from "next/navigation"
+  Zap
+} from 'lucide-react'
+import Link from 'next/link'
 
 // 서비스 데이터
 const services = [
@@ -444,7 +442,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: ServiceDetailPageProps) {
+export async function generateMetadata({ params }: ServiceDetailPageProps): Promise<Metadata> {
   const service = services.find(s => s.slug === params.slug)
 
   if (!service) {
