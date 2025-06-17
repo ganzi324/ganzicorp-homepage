@@ -1349,15 +1349,15 @@
         "dependencies": [
           1
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
             "title": "Create Supabase Project",
             "description": "Set up a new project in Supabase dashboard",
             "dependencies": [],
-            "details": "Log in to Supabase, click 'New Project', choose a name and password, select region",
-            "status": "pending"
+            "details": "Log in to Supabase, click 'New Project', choose a name and password, select region\n<info added on 2025-06-17T06:19:08.862Z>\nSupabase 프로젝트 설정 완료:\n\n1. Supabase 계정에 로그인하여 'New Project' 클릭\n2. 프로젝트 이름 설정 및 데이터베이스 비밀번호 생성\n3. 적절한 리전 선택하여 프로젝트 생성\n4. @supabase/supabase-js 클라이언트 라이브러리 설치\n5. 환경 변수 템플릿(.env.example) 생성\n6. src/lib/supabase.ts에 클라이언트 설정 파일 구현\n   - Notice, Inquiry 타입 정의 포함\n   - 환경 변수 기반 초기화 로직 구현\n7. docs/database-schema.sql에 스키마 정의\n   - notices, inquiries 테이블 구조\n   - RLS 정책 및 인덱스 설정\n   - 자동 업데이트 트리거 구현\n8. docs/supabase-setup.md 설정 가이드 작성\n9. src/app/api/test-supabase/route.ts 연결 테스트 API 구현\n</info added on 2025-06-17T06:19:08.862Z>",
+            "status": "done"
           },
           {
             "id": 2,
@@ -1366,8 +1366,8 @@
             "dependencies": [
               1
             ],
-            "details": "Use Supabase Table Editor to create tables with appropriate columns and data types",
-            "status": "pending"
+            "details": "Use Supabase Table Editor to create tables with appropriate columns and data types\n<info added on 2025-06-17T06:43:54.008Z>\n# Database Schema Setup\n\n## Completed Actions\n1. **Project Configuration**\n   - Project ID: dsgclqtuwhcanznygeqh\n   - Project Name: \"ganzi homepage\"\n   - Region: ap-northeast-2 (Seoul)\n   - Status: ACTIVE_HEALTHY\n\n2. **Environment Variables**\n   - Created .env.local with actual Supabase URL and API keys\n   - Verified Next.js development server auto-reloads environment variables\n\n3. **Database Schema Implementation**\n   - Successfully applied `create_initial_schema` migration\n   - Created tables: notices, inquiries\n   - Configured Row Level Security policies and indexes\n   - Set up automatic update triggers\n\n4. **Sample Data Population**\n   - Added 3 notices (2 published, 1 unpublished)\n   - Added 3 inquiries (1 pending, 1 in_progress, 1 resolved)\n   - Verified all data inserted correctly\n\n5. **Connection Testing**\n   - Fixed API route (resolved count query syntax error)\n   - Confirmed localhost:3001/api/test-supabase returns 200 OK\n   - Verified actual data counts (2 published notices)\n\n## Current Table Status\n- notices: 3 records (2 published, 1 unpublished)\n- inquiries: 3 records (distributed across status types)\n- RLS policies activated and applied\n</info added on 2025-06-17T06:43:54.008Z>",
+            "status": "done"
           },
           {
             "id": 3,
@@ -1376,8 +1376,8 @@
             "dependencies": [
               2
             ],
-            "details": "Define RLS policies in SQL editor to control data access based on user roles",
-            "status": "pending"
+            "details": "Define RLS policies in SQL editor to control data access based on user roles\n<info added on 2025-06-17T06:52:22.411Z>\n# Row Level Security (RLS) Implementation\n\n## Implemented RLS Policies\n\n### 1. notices Table Policies\n- \"Anyone can read published notices\": Only published notices are visible to all users\n- \"Authenticated users can manage notices\": Authenticated users can perform all management operations\n\n### 2. inquiries Table Policies\n- \"Anyone can create inquiries\": All users can create inquiry entries\n- \"Only authenticated users can read inquiries\": Only administrators can view inquiries\n- \"Only authenticated users can update inquiries\": Only administrators can modify inquiries\n\n## Security Testing\n- Created test API endpoint (/api/test-rls) to verify policy enforcement\n- Published notices test: ✅ Only returns 2 published notices (1 unpublished hidden)\n- Inquiries access test: ✅ Anonymous users receive 0 results (security enforced)\n- Inquiry creation test: ✅ Successfully created by anonymous users\n\n## Security Features\n- Privacy protection: Inquiries viewable only by administrators\n- Content control: Unpublished notices automatically hidden\n- Accessibility: Anyone can submit inquiries\n\n## Documentation\n- Created docs/rls-policies.md with detailed policy explanations\n- Included test results and implementation details\n\nAll RLS policies verified and functioning as intended, ensuring proper data security.\n</info added on 2025-06-17T06:52:22.411Z>",
+            "status": "done"
           },
           {
             "id": 4,
@@ -1387,7 +1387,7 @@
               1
             ],
             "details": "Navigate to Project Settings > API, copy anon public and service_role keys",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 5,
@@ -1397,7 +1397,7 @@
               4
             ],
             "details": "Add SUPABASE_URL and SUPABASE_ANON_KEY to .env file, ensure it's gitignored",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 6,
@@ -1410,7 +1410,7 @@
               5
             ],
             "details": "Write a simple script to connect to Supabase and perform a basic query",
-            "status": "pending"
+            "status": "done"
           }
         ]
       },
@@ -2439,7 +2439,7 @@
     ],
     "metadata": {
       "created": "2025-06-17T03:27:33.165Z",
-      "updated": "2025-06-17T05:55:49.135Z",
+      "updated": "2025-06-17T06:53:24.586Z",
       "description": "Development working tag - corresponds to develop Git branch"
     }
   }
