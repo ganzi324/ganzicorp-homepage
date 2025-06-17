@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* GanziCorp Light Theme - Based on brand colors */
+    --background: 248 250 252; /* Very light gray #F8FAFC */
+    --foreground: 30 41 59; /* Dark slate #1E293B */
+    --card: 255 255 255; /* Pure white */
+    --card-foreground: 30 41 59; /* Dark slate */
+    --popover: 255 255 255; /* Pure white */
+    --popover-foreground: 30 41 59; /* Dark slate */
+    --primary: 30 64 175; /* GanziCorp primary blue #1E40AF */
+    --primary-foreground: 248 250 252; /* Light text on primary */
+    --secondary: 59 130 246; /* GanziCorp secondary blue #3B82F6 */
+    --secondary-foreground: 255 255 255; /* White text on secondary */
+    --muted: 241 245 249; /* Light slate #F1F5F9 */
+    --muted-foreground: 100 116 139; /* Slate #64748B */
+    --accent: 96 165 250; /* GanziCorp accent blue #60A5FA */
+    --accent-foreground: 30 41 59; /* Dark text on accent */
+    --destructive: 239 68 68; /* Red #EF4444 */
+    --destructive-foreground: 255 255 255; /* White text on destructive */
+    --border: 226 232 240; /* Light border #E2E8F0 */
+    --input: 226 232 240; /* Light input border */
+    --ring: 30 64 175; /* Primary blue for focus ring */
+    --radius: 0.75rem; /* Slightly more rounded */
+    --chart-1: 30 64 175; /* Primary blue */
+    --chart-2: 16 185 129; /* Success green #10B981 */
+    --chart-3: 245 158 11; /* Warning amber #F59E0B */
+    --chart-4: 59 130 246; /* Secondary blue */
+    --chart-5: 96 165 250; /* Accent blue */
+  }
+
+  .dark {
+    /* GanziCorp Dark Theme - Based on brand colors */
+    --background: 15 23 42; /* Dark slate #0F172A */
+    --foreground: 248 250 252; /* Light gray */
+    --card: 30 41 59; /* Dark slate #1E293B */
+    --card-foreground: 248 250 252; /* Light gray */
+    --popover: 30 41 59; /* Dark slate */
+    --popover-foreground: 248 250 252; /* Light gray */
+    --primary: 96 165 250; /* Lighter blue for dark theme #60A5FA */
+    --primary-foreground: 15 23 42; /* Dark text on primary */
+    --secondary: 59 130 246; /* Secondary blue #3B82F6 */
+    --secondary-foreground: 248 250 252; /* Light text on secondary */
+    --muted: 51 65 85; /* Darker slate #334155 */
+    --muted-foreground: 148 163 184; /* Light slate #94A3B8 */
+    --accent: 59 130 246; /* Secondary blue for accent */
+    --accent-foreground: 248 250 252; /* Light text on accent */
+    --destructive: 220 38 38; /* Darker red #DC2626 */
+    --destructive-foreground: 248 250 252; /* Light text on destructive */
+    --border: 51 65 85; /* Dark border #334155 */
+    --input: 51 65 85; /* Dark input border */
+    --ring: 96 165 250; /* Light blue for focus ring */
+    --radius: 0.75rem; /* Consistent radius */
+    --chart-1: 96 165 250; /* Light blue */
+    --chart-2: 34 197 94; /* Success green #22C55E */
+    --chart-3: 251 191 36; /* Warning yellow #FBBF24 */
+    --chart-4: 59 130 246; /* Secondary blue */
+    --chart-5: 30 64 175; /* Primary blue */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* GanziCorp Custom Utilities */
+  .gradient-bg {
+    background: linear-gradient(135deg, theme('colors.gradient-start'), theme('colors.gradient-end'));
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, theme('colors.ganzicorp.primary'), theme('colors.ganzicorp.accent'));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .card-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .hover-lift {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+} 

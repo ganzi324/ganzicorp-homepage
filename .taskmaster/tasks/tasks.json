@@ -1220,5 +1220,1227 @@
       "updated": "2025-06-17T02:53:16.906Z",
       "description": "Tasks for master context"
     }
+  },
+  "develop": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Initialize Next.js Project with TypeScript",
+        "description": "Set up a new Next.js project using the App Router and TypeScript for type safety.",
+        "details": "Use 'create-next-app' with the '--typescript' flag to create a new Next.js project. Ensure Node.js v18+ is installed. Configure the project to use the App Router by setting the appropriate option during setup. Initialize a new Git repository and create a .gitignore file.",
+        "testStrategy": "Verify that the project builds without errors and the development server runs correctly. Check that TypeScript is properly configured by creating a test component with type annotations.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Next.js project with TypeScript",
+            "description": "Initialize a new Next.js project with TypeScript support using create-next-app",
+            "dependencies": [],
+            "details": "Run 'npx create-next-app@latest' and select TypeScript option when prompted\n<info added on 2025-06-17T05:25:48.130Z>\nNext.js 프로젝트가 성공적으로 초기화되었습니다:\n- package.json 생성 완료 (Next.js 15.1.0, TypeScript 5.7.2)\n- tsconfig.json 설정 완료 (앱 라우터, 경로 별칭 포함)\n- ESLint, Prettier 설정 포함\n- 모든 필요한 의존성 설치 완료\n\n프로젝트 구조가 준비되었으며 TypeScript 설정이 완료되었습니다. 다음 단계로 App Router 구성을 진행할 수 있습니다.\n</info added on 2025-06-17T05:25:48.130Z>",
+            "status": "done"
+          },
+          {
+            "id": 2,
+            "title": "Configure App Router",
+            "description": "Set up the App Router structure in the Next.js project",
+            "dependencies": [
+              1
+            ],
+            "details": "Create 'app' directory and necessary files (layout.tsx, page.tsx) for App Router functionality",
+            "status": "done"
+          },
+          {
+            "id": 3,
+            "title": "Initialize Git repository",
+            "description": "Create a new Git repository for version control",
+            "dependencies": [
+              1
+            ],
+            "details": "Run 'git init' in the project root, create .gitignore file, and make initial commit",
+            "status": "done"
+          },
+          {
+            "id": 4,
+            "title": "Verify project setup",
+            "description": "Ensure all components are correctly configured and working",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Run the development server, check for TypeScript compilation errors, and test App Router functionality",
+            "status": "done"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Set up Tailwind CSS and Shadcn UI",
+        "description": "Integrate Tailwind CSS and Shadcn UI for styling and component library.",
+        "details": "Install Tailwind CSS (v3.3.2) and its dependencies. Configure Tailwind by creating a tailwind.config.js file. Install and set up Shadcn UI following their official documentation. Create a global CSS file to import Tailwind directives.",
+        "testStrategy": "Create a test page with Tailwind classes and Shadcn UI components to ensure proper integration. Verify that styles are applied correctly and components render as expected.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install Tailwind CSS",
+            "description": "Set up Tailwind CSS in the project",
+            "dependencies": [],
+            "details": "Install Tailwind CSS via npm, create the configuration file, and add the Tailwind directives to the CSS\n<info added on 2025-06-17T05:29:25.225Z>\n✅ 완료: Tailwind CSS 설치\n- Tailwind CSS v3.4.17 이미 package.json에 설치됨\n- PostCSS, Autoprefixer 함께 설치 완료\n- tailwind.config.js 설정 파일 생성 완료\n- globals.css에 Tailwind directives 추가 완료\n- 개발 서버에서 정상 동작 확인\n</info added on 2025-06-17T05:29:25.225Z>",
+            "status": "done"
+          },
+          {
+            "id": 2,
+            "title": "Configure Tailwind CSS",
+            "description": "Customize Tailwind CSS settings for the project",
+            "dependencies": [
+              1
+            ],
+            "details": "Modify the tailwind.config.js file to add any custom colors, fonts, or other design tokens specific to the project\n<info added on 2025-06-17T05:33:12.790Z>\nI've customized the Tailwind CSS configuration by:\n\n- Adding GanziCorp brand color palette (primary, secondary, accent, dark, light)\n- Defining custom gradient colors (gradient-start, gradient-end)\n- Creating utility classes for common design patterns:\n  • gradient-bg and gradient-text for branded gradients\n  • card-shadow for consistent elevation\n  • hover-lift for interactive elements\n- Applied brand colors to homepage elements to verify configuration\n- Implemented responsive design adjustments and hover effects\n\nAll customizations are properly configured in tailwind.config.js and tested across different viewport sizes.\n</info added on 2025-06-17T05:33:12.790Z>",
+            "status": "done"
+          },
+          {
+            "id": 3,
+            "title": "Install Shadcn UI",
+            "description": "Set up Shadcn UI in the project",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Install Shadcn UI via the CLI, initialize it in the project, and set up the necessary configuration files\n<info added on 2025-06-17T05:41:40.277Z>\nShadcn UI 설치 및 설정 완료:\n- shadcn@latest CLI로 프로젝트 초기화 (New York 스타일, Neutral 색상)\n- components.json 설정 파일 생성 (경로 별칭, 아이콘 라이브러리 설정)\n- src/lib/utils.ts 유틸리티 함수 생성 (cn 함수)\n- Button, Card 컴포넌트 설치 및 테스트\n- 홈페이지에서 Shadcn UI 컴포넌트 동작 확인\n- 개발 서버 정상 실행 (localhost:3001)\n</info added on 2025-06-17T05:41:40.277Z>",
+            "status": "done"
+          },
+          {
+            "id": 4,
+            "title": "Customize Shadcn UI components",
+            "description": "Adjust Shadcn UI components to fit project requirements",
+            "dependencies": [
+              3
+            ],
+            "details": "Modify the global.css file and component files to customize the appearance and behavior of Shadcn UI components as needed\n<info added on 2025-06-17T05:45:27.985Z>\nCustomized Shadcn UI components with GanziCorp brand colors by redefining CSS variables for both light and dark themes. Applied Primary (#1E40AF), Secondary (#3B82F6), and Accent (#60A5FA) colors. For light theme, implemented clean white background with slate text, while dark theme uses dark slate background with light text. Adjusted border radius to 0.75rem for rounder corners. Installed and tested Badge component. Added a section to the homepage showcasing customized components. Successfully tested all variants (default, secondary, outline) to ensure consistent styling across the application.\n</info added on 2025-06-17T05:45:27.985Z>",
+            "status": "done"
+          },
+          {
+            "id": 5,
+            "title": "Implement integration tests",
+            "description": "Create and run integration tests for Tailwind CSS and Shadcn UI setup",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Write and execute integration tests to ensure Tailwind CSS classes are working correctly and Shadcn UI components are rendering properly\n<info added on 2025-06-17T05:47:17.068Z>\nCreated a comprehensive test page at /test route to verify integration. Tested Tailwind CSS custom colors and utility classes across the application. Validated all Shadcn UI component variants including Button, Badge, and Card components. Implemented responsive design grid system tests to ensure proper scaling across device sizes. Applied and verified brand colors with hover effect validation. Added navigation link on homepage for easy access to the test page. All integration tests passed successfully, confirming proper implementation of both Tailwind CSS and Shadcn UI.\n</info added on 2025-06-17T05:47:17.068Z>",
+            "status": "done"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Configure Supabase Project and Environment Variables",
+        "description": "Set up a Supabase project and configure environment variables for the application.",
+        "details": "Create a new Supabase project using the free tier. Set up the necessary tables (notices and inquiries) in the Supabase database. Generate API keys and connection strings. Create a .env.local file to store Supabase URL and API key. Update .gitignore to exclude .env files.",
+        "testStrategy": "Test the connection to Supabase by creating a simple API route that queries the database. Verify that environment variables are correctly loaded and used in the application.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Supabase Project",
+            "description": "Set up a new project in Supabase dashboard",
+            "dependencies": [],
+            "details": "Log in to Supabase, click 'New Project', choose a name and password, select region",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Configure Database Tables",
+            "description": "Design and create necessary database tables",
+            "dependencies": [
+              1
+            ],
+            "details": "Use Supabase Table Editor to create tables with appropriate columns and data types",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Set Up Row Level Security",
+            "description": "Implement row level security policies for tables",
+            "dependencies": [
+              2
+            ],
+            "details": "Define RLS policies in SQL editor to control data access based on user roles",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Generate API Keys",
+            "description": "Create and retrieve necessary API keys",
+            "dependencies": [
+              1
+            ],
+            "details": "Navigate to Project Settings > API, copy anon public and service_role keys",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Configure Environment Variables",
+            "description": "Set up environment variables for API keys",
+            "dependencies": [
+              4
+            ],
+            "details": "Add SUPABASE_URL and SUPABASE_ANON_KEY to .env file, ensure it's gitignored",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Test Supabase Connection",
+            "description": "Verify the setup by testing the connection",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Write a simple script to connect to Supabase and perform a basic query",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Implement Basic Layout and Navigation",
+        "description": "Create a basic layout with header, footer, and navigation components.",
+        "details": "Create reusable Header and Footer components using Tailwind CSS for styling. Implement a responsive navigation menu using Shadcn UI components. Set up the basic routing structure using Next.js App Router in the app directory.",
+        "testStrategy": "Test the layout on different screen sizes to ensure responsiveness. Verify that navigation links work correctly and the active page is highlighted.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create reusable layout components",
+            "description": "Design and implement reusable layout components for the Next.js application",
+            "dependencies": [],
+            "details": "Create components such as Header, Footer, and MainLayout that can be used across different pages",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement responsive navigation",
+            "description": "Develop a responsive navigation menu that adapts to different screen sizes",
+            "dependencies": [
+              1
+            ],
+            "details": "Use CSS media queries and/or a CSS framework to create a navigation bar that collapses into a hamburger menu on smaller screens",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Set up basic routing structure",
+            "description": "Establish the foundational routing structure using Next.js App Router",
+            "dependencies": [],
+            "details": "Create the necessary folder structure and route files for main pages (e.g., home, about, contact)",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement dynamic routing",
+            "description": "Add dynamic routing capabilities for content-based pages",
+            "dependencies": [
+              3
+            ],
+            "details": "Create dynamic routes for blog posts, product pages, or any other content that requires unique URLs",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Integrate layout components with routing",
+            "description": "Combine the created layout components with the routing structure",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Ensure that the reusable layout components are properly applied to all routes, including dynamic ones",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Develop Static Pages",
+        "description": "Create static pages for Home, About, Services, and Team.",
+        "details": "Implement the following pages using Next.js and Tailwind CSS: Home page (/) with company logo, slogan, and CTA button; About page (/about) with company history and vision; Services page (/services) showcasing 5 main services with images and descriptions; Team page (/team) with team member introductions and organizational chart.",
+        "testStrategy": "Review each page for content accuracy and design consistency. Test responsiveness and ensure all links and images load correctly.",
+        "priority": "medium",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Home page content",
+            "description": "Develop the main content for the Home page, including hero section, key features, and call-to-action",
+            "dependencies": [],
+            "details": "Write compelling copy, select appropriate images, and determine layout structure",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Style Home page",
+            "description": "Apply CSS styling to the Home page to match the design mockups",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement responsive design, ensure proper spacing, and apply color scheme",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Create About page content",
+            "description": "Develop the main content for the About page, including company history, mission, and values",
+            "dependencies": [],
+            "details": "Write informative copy, select relevant images, and structure the content logically",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Style About page",
+            "description": "Apply CSS styling to the About page to match the design mockups",
+            "dependencies": [
+              3
+            ],
+            "details": "Ensure consistency with Home page styling while highlighting unique elements",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Create Services page content",
+            "description": "Develop the main content for the Services page, detailing offered services and their benefits",
+            "dependencies": [],
+            "details": "Write clear descriptions for each service, create service icons or images, and structure the layout",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Style Services page",
+            "description": "Apply CSS styling to the Services page to match the design mockups",
+            "dependencies": [
+              5
+            ],
+            "details": "Implement grid or flexbox layout for services, ensure consistent styling with other pages",
+            "status": "pending"
+          },
+          {
+            "id": 7,
+            "title": "Create Team page content",
+            "description": "Develop the main content for the Team page, including team member profiles and roles",
+            "dependencies": [],
+            "details": "Write brief bios for each team member, obtain and format profile pictures, and determine layout",
+            "status": "pending"
+          },
+          {
+            "id": 8,
+            "title": "Style Team page",
+            "description": "Apply CSS styling to the Team page to match the design mockups",
+            "dependencies": [
+              7
+            ],
+            "details": "Create a responsive grid for team members, ensure consistent styling with other pages",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Set Up Supabase Auth for Admin Login",
+        "description": "Implement admin authentication using Supabase Auth.",
+        "details": "Install @supabase/auth-helpers-nextjs package. Set up Supabase Auth in the application. Create a login page for admin users. Implement login and logout functionality using Supabase Auth methods. Use the provided test admin credentials (admin@testcorp.com / testadmin123) for initial setup.",
+        "testStrategy": "Test login functionality with correct and incorrect credentials. Verify that authenticated state is maintained across page reloads. Test logout functionality.",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install Supabase packages",
+            "description": "Install necessary Supabase packages for authentication",
+            "dependencies": [],
+            "details": "Run 'npm install @supabase/supabase-js' to install the Supabase JavaScript client library",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Set up Supabase project",
+            "description": "Create a new Supabase project and configure authentication settings",
+            "dependencies": [
+              1
+            ],
+            "details": "Create a new project in Supabase dashboard, enable desired auth providers, and note down the project URL and API key",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Initialize Supabase client",
+            "description": "Set up Supabase client in the application",
+            "dependencies": [
+              2
+            ],
+            "details": "Create a new file to initialize Supabase client using project URL and API key",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Create login page UI",
+            "description": "Design and implement the login page user interface",
+            "dependencies": [
+              3
+            ],
+            "details": "Create a new component for the login page with input fields for email and password, and a submit button",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement login functionality",
+            "description": "Add login logic to the login page",
+            "dependencies": [
+              4
+            ],
+            "details": "Use Supabase client to implement signIn method and handle successful login and errors",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Set up authentication state management",
+            "description": "Implement a system to manage and persist authentication state",
+            "dependencies": [
+              5
+            ],
+            "details": "Create a context or use a state management library to store and update the user's authentication status",
+            "status": "pending"
+          },
+          {
+            "id": 7,
+            "title": "Add logout functionality",
+            "description": "Implement a way for users to log out",
+            "dependencies": [
+              6
+            ],
+            "details": "Create a logout button and use Supabase client's signOut method to log out the user and update the auth state",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Create Protected Admin Routes",
+        "description": "Implement protected routes for admin-only access.",
+        "details": "Create a middleware to check authentication status for admin routes. Implement redirect logic for unauthenticated users trying to access admin pages. Set up a basic admin dashboard layout.",
+        "testStrategy": "Attempt to access admin routes while logged out and verify redirection. Test access to admin routes when logged in as an admin. Verify that non-admin routes are still accessible without authentication.",
+        "priority": "high",
+        "dependencies": [
+          6
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create middleware for authentication",
+            "description": "Implement a middleware function to check user authentication status",
+            "dependencies": [],
+            "details": "Create a middleware.ts file in the project root. Implement logic to check for user session and redirect unauthenticated users.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Set up protected route logic",
+            "description": "Implement logic to protect specific routes based on user authentication",
+            "dependencies": [
+              1
+            ],
+            "details": "Use the middleware to protect routes under /admin. Ensure that only authenticated users can access these routes.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Implement redirect logic for unauthenticated users",
+            "description": "Create logic to redirect unauthenticated users to the login page",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "In the middleware, add logic to redirect unauthenticated users to the login page when they try to access protected routes.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Create admin dashboard layout",
+            "description": "Set up the basic layout for the admin dashboard",
+            "dependencies": [
+              2
+            ],
+            "details": "Create a new layout component for the admin dashboard. Include common elements like header, sidebar, and main content area.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Test protected routes and redirects",
+            "description": "Thoroughly test the implemented protected routes and redirect logic",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Create test cases to verify that protected routes are accessible only to authenticated users and that unauthenticated users are correctly redirected to the login page.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Implement Notice Board Functionality",
+        "description": "Create the notice board feature with CRUD operations for admins.",
+        "details": "Implement API routes for CRUD operations on notices. Create a notice list page (/notice) accessible to all users. Develop an admin interface for creating, editing, and deleting notices. Use Supabase client to interact with the notices table.",
+        "testStrategy": "Test all CRUD operations on notices. Verify that notices are displayed correctly on the public notice page. Ensure that only authenticated admins can perform CRUD operations.",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          7
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set up API route structure",
+            "description": "Create the basic structure for API routes in the project",
+            "dependencies": [],
+            "details": "Initialize the API folder structure and set up the base router",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement CRUD operations for notices",
+            "description": "Create API endpoints for creating, reading, updating, and deleting notices",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop routes for GET, POST, PUT, and DELETE operations on notices",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Integrate Supabase for data fetching",
+            "description": "Set up Supabase client and implement data fetching functions",
+            "dependencies": [
+              2
+            ],
+            "details": "Configure Supabase connection and create utility functions for database operations",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement user authentication",
+            "description": "Set up user authentication system using Supabase",
+            "dependencies": [
+              3
+            ],
+            "details": "Create login, logout, and user session management functions",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Create admin interface layout",
+            "description": "Design and implement the basic layout for the admin interface",
+            "dependencies": [
+              4
+            ],
+            "details": "Create reusable components for admin dashboard, navigation, and content areas",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Implement admin CRUD operations",
+            "description": "Create forms and functions for admin to perform CRUD operations on notices",
+            "dependencies": [
+              5
+            ],
+            "details": "Develop UI components and integrate with API for notice management",
+            "status": "pending"
+          },
+          {
+            "id": 7,
+            "title": "Design public notice page",
+            "description": "Create the layout and components for the public-facing notice page",
+            "dependencies": [
+              3
+            ],
+            "details": "Implement responsive design for displaying notices to the public",
+            "status": "pending"
+          },
+          {
+            "id": 8,
+            "title": "Implement notice filtering and pagination",
+            "description": "Add functionality to filter and paginate notices on the public page",
+            "dependencies": [
+              7
+            ],
+            "details": "Create UI components for filtering options and implement pagination logic",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Develop Contact Form",
+        "description": "Create a contact form for user inquiries.",
+        "details": "Design and implement a contact form using Tailwind CSS and Shadcn UI components. Create an API route to handle form submissions and store inquiries in the Supabase inquiries table. Implement form validation using a library like react-hook-form or zod.",
+        "testStrategy": "Test form submission with valid and invalid data. Verify that submitted inquiries are correctly stored in the database. Check form validation for all fields.",
+        "priority": "medium",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design contact form layout",
+            "description": "Create a visually appealing and user-friendly layout for the contact form",
+            "dependencies": [],
+            "details": "Use HTML and CSS to design the form structure, including input fields for name, email, subject, and message. Ensure responsive design for various screen sizes.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement client-side form validation",
+            "description": "Set up JavaScript validation for form inputs",
+            "dependencies": [
+              1
+            ],
+            "details": "Write JavaScript functions to validate email format, required fields, and input length. Provide real-time feedback to users on input errors.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Create API route for form submission",
+            "description": "Develop a server-side API endpoint to handle form submissions",
+            "dependencies": [],
+            "details": "Set up a POST route in the backend (e.g., /api/contact) to receive form data. Implement request parsing and initial data validation.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement database integration",
+            "description": "Set up database connection and schema for storing contact form submissions",
+            "dependencies": [
+              3
+            ],
+            "details": "Create a database table or collection for contact submissions. Implement functions to insert new submissions into the database.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Add server-side form validation",
+            "description": "Implement additional validation checks on the server",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Add server-side validation for data integrity, including checks for required fields, data types, and potential security issues like SQL injection.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Implement form submission handling",
+            "description": "Connect front-end form submission with the API and handle responses",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Use AJAX or fetch API to send form data to the server. Handle success and error responses, and provide appropriate feedback to the user.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Implement Admin Inquiry Management",
+        "description": "Create an admin interface for managing and responding to inquiries.",
+        "details": "Develop an admin page to list all inquiries. Implement functionality to view inquiry details and add responses. Create API routes for updating inquiry status and adding responses. Use Supabase client to interact with the inquiries table.",
+        "testStrategy": "Test listing, viewing, and responding to inquiries in the admin interface. Verify that responses are correctly stored and associated with the right inquiry.",
+        "priority": "medium",
+        "dependencies": [
+          7,
+          9
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design admin interface layout",
+            "description": "Create wireframes and mockups for the admin interface, including pages for listing, viewing, and responding to inquiries.",
+            "dependencies": [],
+            "details": "Use a design tool like Figma or Sketch to create the layout. Include navigation, search functionality, and responsive design considerations.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement admin authentication",
+            "description": "Set up secure authentication for admin users to access the interface.",
+            "dependencies": [],
+            "details": "Use JWT or session-based authentication. Implement login, logout, and password reset functionality.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Create API routes for inquiry management",
+            "description": "Develop backend API routes for listing, viewing, and responding to inquiries.",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement GET, POST, and PUT routes for inquiries. Include pagination and filtering options for the listing route.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Set up database schema and interactions",
+            "description": "Design and implement the database schema for storing inquiries and responses.",
+            "dependencies": [
+              3
+            ],
+            "details": "Use an ORM like Sequelize or TypeORM to define models and handle database interactions. Include fields for inquiry details, status, and response data.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Develop inquiry listing page",
+            "description": "Create a frontend page to display a list of inquiries with sorting and filtering options.",
+            "dependencies": [
+              1,
+              3,
+              4
+            ],
+            "details": "Implement a table or grid view with pagination. Include search functionality and status filters.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Implement inquiry detail view",
+            "description": "Create a page to display detailed information about a single inquiry and allow admin responses.",
+            "dependencies": [
+              1,
+              3,
+              4
+            ],
+            "details": "Show all inquiry details, including user information and inquiry history. Implement a form for admin responses.",
+            "status": "pending"
+          },
+          {
+            "id": 7,
+            "title": "Add response functionality",
+            "description": "Implement the ability for admins to respond to inquiries and update their status.",
+            "dependencies": [
+              3,
+              4,
+              6
+            ],
+            "details": "Create a form for composing responses. Implement status updates (e.g., pending, in progress, resolved). Add email notification functionality for user updates.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Implement Real-time Updates for Inquiries",
+        "description": "Add real-time functionality for new inquiries using Supabase Realtime.",
+        "details": "Set up Supabase Realtime subscription for the inquiries table. Implement real-time updates in the admin dashboard to show new inquiries without page refresh. Use Supabase's subscription API to listen for changes.",
+        "testStrategy": "Test real-time updates by submitting new inquiries and verifying immediate appearance in the admin dashboard. Check for any performance issues related to real-time subscriptions.",
+        "priority": "low",
+        "dependencies": [
+          10
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set up Supabase Realtime",
+            "description": "Configure Supabase project settings to enable Realtime functionality",
+            "dependencies": [],
+            "details": "Enable Realtime in Supabase dashboard, configure security rules, and set up necessary tables for real-time updates",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement subscription logic",
+            "description": "Create subscription handlers to listen for real-time updates",
+            "dependencies": [
+              1
+            ],
+            "details": "Use Supabase client to subscribe to specific tables or channels, implement error handling and reconnection logic",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Create UI update mechanism",
+            "description": "Develop a system to efficiently update the UI with real-time data",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement a state management solution (e.g., Redux, MobX) to handle real-time updates and trigger UI re-renders",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Optimize performance",
+            "description": "Ensure efficient handling of real-time updates without impacting app performance",
+            "dependencies": [
+              3
+            ],
+            "details": "Implement debouncing, throttling, or batching techniques to prevent excessive UI updates, optimize React component rendering",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Test and debug real-time functionality",
+            "description": "Thoroughly test the real-time features and fix any issues",
+            "dependencies": [
+              4
+            ],
+            "details": "Create test scenarios for various real-time update scenarios, implement logging for debugging, and ensure proper error handling",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Optimize Performance and Implement SEO",
+        "description": "Optimize the application for performance and implement basic SEO.",
+        "details": "Implement image optimization using Next.js Image component. Add meta tags for SEO using Next.js Head component. Implement lazy loading for non-critical components. Use Next.js dynamic imports for code splitting where appropriate.",
+        "testStrategy": "Run Lighthouse audits to measure performance, accessibility, and SEO scores. Verify that images are properly optimized and lazy loaded. Check that meta tags are correctly set for each page.",
+        "priority": "medium",
+        "dependencies": [
+          5,
+          8,
+          9
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Analyze current website performance",
+            "description": "Use tools like Lighthouse or PageSpeed Insights to measure current website performance metrics",
+            "dependencies": [],
+            "details": "Record baseline metrics for page load time, First Contentful Paint, and Time to Interactive",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Optimize image assets",
+            "description": "Compress and resize images to reduce file sizes without compromising quality",
+            "dependencies": [
+              1
+            ],
+            "details": "Use tools like ImageOptim or Squoosh to optimize images, consider implementing WebP format",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Implement lazy loading for images",
+            "description": "Add lazy loading attributes to images to defer loading of off-screen images",
+            "dependencies": [
+              2
+            ],
+            "details": "Use the 'loading' attribute or Intersection Observer API for lazy loading implementation",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Optimize meta tags for SEO",
+            "description": "Review and update meta tags to improve search engine visibility",
+            "dependencies": [
+              1
+            ],
+            "details": "Focus on title tags, meta descriptions, and Open Graph tags for social sharing",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement code splitting",
+            "description": "Break down JavaScript bundles into smaller chunks to improve initial load time",
+            "dependencies": [
+              1
+            ],
+            "details": "Use dynamic imports or React.lazy() for component-level code splitting",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Optimize CSS delivery",
+            "description": "Minimize CSS, remove unused styles, and optimize CSS delivery",
+            "dependencies": [
+              1
+            ],
+            "details": "Use tools like PurgeCSS to remove unused styles, consider critical CSS inlining",
+            "status": "pending"
+          },
+          {
+            "id": 7,
+            "title": "Implement caching strategies",
+            "description": "Set up proper caching headers and implement service workers for offline caching",
+            "dependencies": [
+              1,
+              5
+            ],
+            "details": "Configure server caching headers, implement service worker for asset caching",
+            "status": "pending"
+          },
+          {
+            "id": 8,
+            "title": "Optimize server response time",
+            "description": "Analyze and improve server-side performance to reduce Time to First Byte (TTFB)",
+            "dependencies": [
+              1
+            ],
+            "details": "Optimize database queries, implement server-side caching, consider CDN usage",
+            "status": "pending"
+          },
+          {
+            "id": 9,
+            "title": "Conduct final performance testing",
+            "description": "Re-run performance tests and compare with baseline metrics to measure improvements",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "details": "Use the same tools as in subtask 1, document improvements, and identify any remaining issues",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Implement Responsive Design",
+        "description": "Ensure the entire application is fully responsive across all device sizes.",
+        "details": "Use Tailwind CSS responsive classes to adjust layouts for different screen sizes. Test and adjust all components and pages for mobile, tablet, and desktop views. Implement a responsive navigation menu that collapses on smaller screens.",
+        "testStrategy": "Test the application on various devices and screen sizes. Use browser developer tools to simulate different device sizes and verify layout integrity.",
+        "priority": "high",
+        "dependencies": [
+          5,
+          8,
+          9
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define breakpoints for responsive design",
+            "description": "Establish standard breakpoints for mobile, tablet, and desktop views",
+            "dependencies": [],
+            "details": "Research common breakpoints and decide on specific pixel widths for each device category",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Create responsive layout grid system",
+            "description": "Develop a flexible grid system that adapts to different screen sizes",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement a CSS grid or flexbox-based system that adjusts column widths and margins",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Implement responsive navigation menu",
+            "description": "Design and code a navigation menu that collapses on smaller screens",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Create a hamburger menu for mobile and expand to full menu on larger screens",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Optimize images for responsive design",
+            "description": "Prepare and implement responsive images that load appropriately for different screen sizes",
+            "dependencies": [
+              1
+            ],
+            "details": "Use srcset and sizes attributes or picture element for adaptive image loading",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Adjust typography for readability across devices",
+            "description": "Ensure text is legible and properly scaled on all screen sizes",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement fluid typography using viewport units or media queries",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Develop responsive form layouts",
+            "description": "Create forms that adjust layout and input sizes for different devices",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Stack form elements vertically on mobile and use multi-column layouts on larger screens",
+            "status": "pending"
+          },
+          {
+            "id": 7,
+            "title": "Implement responsive data tables",
+            "description": "Design tables that can be easily read and navigated on small screens",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Use techniques like horizontal scrolling, collapsing columns, or card-based layouts for mobile",
+            "status": "pending"
+          },
+          {
+            "id": 8,
+            "title": "Conduct cross-device testing",
+            "description": "Test the responsive design implementation across various devices and browsers",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "details": "Use both physical devices and emulators to verify layout, functionality, and performance",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Set Up Continuous Deployment with Vercel and GitHub",
+        "description": "Configure automatic deployment using Vercel and GitHub integration.",
+        "details": "Create a GitHub repository for the project. Configure Vercel for automatic deployments from the GitHub repository. Set up environment variables in Vercel dashboard. Configure build settings and deployment branches.",
+        "testStrategy": "Make a test commit and push to GitHub to verify automatic deployment. Check that environment variables are correctly set in the deployed application.",
+        "priority": "low",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create GitHub Repository",
+            "description": "Set up a new GitHub repository for the project",
+            "dependencies": [],
+            "details": "Initialize a new repository on GitHub, add a README.md file, and set up appropriate .gitignore file",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Configure Vercel Account",
+            "description": "Set up and configure a Vercel account for deployments",
+            "dependencies": [],
+            "details": "Create a Vercel account if not existing, and familiarize with the Vercel dashboard",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Link GitHub to Vercel",
+            "description": "Connect the GitHub repository to Vercel for automatic deployments",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Use Vercel's GitHub integration to link the repository and set up automatic deployment triggers",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Configure Environment Variables",
+            "description": "Set up necessary environment variables in Vercel",
+            "dependencies": [
+              3
+            ],
+            "details": "Identify required environment variables and add them to the Vercel project settings",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Test Automatic Deployment",
+            "description": "Verify that changes pushed to GitHub trigger automatic deployments on Vercel",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Make a small change in the repository, push to GitHub, and confirm that Vercel automatically deploys the changes",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "title": "Conduct Final Testing and Bug Fixes",
+        "description": "Perform comprehensive testing of all features and fix any identified bugs.",
+        "details": "Create a test plan covering all implemented features. Conduct thorough testing of all user flows, including edge cases. Test admin functionalities with different permission levels. Verify data consistency between the frontend and the Supabase database. Address and fix any bugs or issues discovered during testing.",
+        "testStrategy": "Execute the test plan and document any issues found. Perform cross-browser testing. Conduct user acceptance testing with stakeholders. Verify that all fixed issues are resolved in the production environment.",
+        "priority": "high",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define test plan and scope",
+            "description": "Create a comprehensive test plan outlining the scope, objectives, and methodologies for testing all features",
+            "dependencies": [],
+            "details": "Include timelines, resources, and specific testing environments in the plan",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Develop test cases for core features",
+            "description": "Create detailed test cases for all core features of the application",
+            "dependencies": [
+              1
+            ],
+            "details": "Ensure coverage of positive and negative scenarios, input validation, and expected outputs",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Identify and document edge cases",
+            "description": "Analyze each feature to identify potential edge cases and create specific test scenarios",
+            "dependencies": [
+              2
+            ],
+            "details": "Consider extreme inputs, boundary conditions, and unexpected user behaviors",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Set up cross-browser testing environment",
+            "description": "Prepare testing environments for multiple browsers and versions",
+            "dependencies": [
+              1
+            ],
+            "details": "Include popular browsers like Chrome, Firefox, Safari, and Edge, as well as their mobile versions",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Execute cross-browser compatibility tests",
+            "description": "Run test cases across different browsers to ensure consistent functionality and appearance",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Document any discrepancies or issues found during cross-browser testing",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Perform responsive design testing",
+            "description": "Test the application's responsiveness across various screen sizes and devices",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Use both real devices and emulators to cover a wide range of screen sizes and resolutions",
+            "status": "pending"
+          },
+          {
+            "id": 7,
+            "title": "Conduct performance testing",
+            "description": "Evaluate the application's performance under different load conditions",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Use tools to simulate various user loads and measure response times, resource usage, and stability",
+            "status": "pending"
+          },
+          {
+            "id": 8,
+            "title": "Prepare user acceptance testing (UAT) scenarios",
+            "description": "Develop a set of real-world scenarios for user acceptance testing",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Collaborate with stakeholders to ensure scenarios cover critical business processes",
+            "status": "pending"
+          },
+          {
+            "id": 9,
+            "title": "Conduct user acceptance testing",
+            "description": "Facilitate UAT sessions with end-users or stakeholders",
+            "dependencies": [
+              8
+            ],
+            "details": "Gather feedback, document issues, and prioritize any necessary changes or fixes",
+            "status": "pending"
+          },
+          {
+            "id": 10,
+            "title": "Compile and analyze test results",
+            "description": "Collect all test results, analyze findings, and prepare a comprehensive test report",
+            "dependencies": [
+              5,
+              6,
+              7,
+              9
+            ],
+            "details": "Summarize test coverage, identified issues, and recommendations for improvements or fixes",
+            "status": "pending"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-06-17T03:27:33.165Z",
+      "updated": "2025-06-17T05:55:49.135Z",
+      "description": "Development working tag - corresponds to develop Git branch"
+    }
   }
 }
