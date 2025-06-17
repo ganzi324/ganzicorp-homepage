@@ -1424,15 +1424,15 @@
         "dependencies": [
           2
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
             "title": "Create reusable layout components",
             "description": "Design and implement reusable layout components for the Next.js application",
             "dependencies": [],
-            "details": "Create components such as Header, Footer, and MainLayout that can be used across different pages",
-            "status": "pending"
+            "details": "Create components such as Header, Footer, and MainLayout that can be used across different pages\n<info added on 2025-06-17T06:58:31.617Z>\n✅ 재사용 가능한 레이아웃 컴포넌트 생성 완료\n\n**완료된 컴포넌트:**\n\n**1. Header 컴포넌트 (src/components/layout/Header.tsx)**\n- GanziCorp 브랜드 로고 및 네비게이션\n- 반응형 디자인: 데스크톱/모바일 메뉴 지원\n- 햄버거 메뉴 토글 기능 (Lucide React 아이콘)\n- 주요 페이지 링크: 홈, 회사소개, 서비스, 공지사항, 문의하기\n- CTA 버튼: \"무료 상담\" (primary 색상)\n- Sticky 헤더 (상단 고정)\n\n**2. Footer 컴포넌트 (src/components/layout/Footer.tsx)**\n- 4열 그리드 레이아웃 (회사정보, 회사링크, 지원링크, 법적정보)\n- 연락처 정보 (전화, 이메일, 주소) with 아이콘\n- 소셜 미디어 링크 (GitHub, Twitter, LinkedIn)\n- 저작권 정보 및 현재 연도 자동 업데이트\n- 반응형 디자인 (모바일에서 1열로 변경)\n\n**3. MainLayout 컴포넌트 (src/components/layout/MainLayout.tsx)**\n- Header + Main + Footer 구조\n- flex-1로 main 영역 자동 확장\n- min-h-screen으로 전체 화면 활용\n- className props로 추가 스타일링 지원\n\n**4. 홈페이지 적용**\n- 기존 홈페이지에 MainLayout 적용\n- 구조 개선: main → section 변경\n- 헤더/푸터가 포함된 완전한 레이아웃 구현\n\n**5. 의존성 설치**\n- lucide-react 아이콘 라이브러리 (이미 설치됨)\n\n**테스트 결과:**\n- localhost:3001 정상 응답 (HTTP 200 OK)\n- 컴파일 성공 (342 modules in 1375ms)\n- 헤더/푸터가 포함된 완전한 페이지 구조 확인\n</info added on 2025-06-17T06:58:31.617Z>",
+            "status": "done"
           },
           {
             "id": 2,
@@ -2439,7 +2439,7 @@
     ],
     "metadata": {
       "created": "2025-06-17T03:27:33.165Z",
-      "updated": "2025-06-17T06:53:24.586Z",
+      "updated": "2025-06-17T06:58:36.991Z",
       "description": "Development working tag - corresponds to develop Git branch"
     }
   }
