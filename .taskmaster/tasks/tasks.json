@@ -1366,8 +1366,8 @@
             "dependencies": [
               1
             ],
-            "details": "Use Supabase Table Editor to create tables with appropriate columns and data types",
-            "status": "pending"
+            "details": "Use Supabase Table Editor to create tables with appropriate columns and data types\n<info added on 2025-06-17T06:43:54.008Z>\n# Database Schema Setup\n\n## Completed Actions\n1. **Project Configuration**\n   - Project ID: dsgclqtuwhcanznygeqh\n   - Project Name: \"ganzi homepage\"\n   - Region: ap-northeast-2 (Seoul)\n   - Status: ACTIVE_HEALTHY\n\n2. **Environment Variables**\n   - Created .env.local with actual Supabase URL and API keys\n   - Verified Next.js development server auto-reloads environment variables\n\n3. **Database Schema Implementation**\n   - Successfully applied `create_initial_schema` migration\n   - Created tables: notices, inquiries\n   - Configured Row Level Security policies and indexes\n   - Set up automatic update triggers\n\n4. **Sample Data Population**\n   - Added 3 notices (2 published, 1 unpublished)\n   - Added 3 inquiries (1 pending, 1 in_progress, 1 resolved)\n   - Verified all data inserted correctly\n\n5. **Connection Testing**\n   - Fixed API route (resolved count query syntax error)\n   - Confirmed localhost:3001/api/test-supabase returns 200 OK\n   - Verified actual data counts (2 published notices)\n\n## Current Table Status\n- notices: 3 records (2 published, 1 unpublished)\n- inquiries: 3 records (distributed across status types)\n- RLS policies activated and applied\n</info added on 2025-06-17T06:43:54.008Z>",
+            "status": "done"
           },
           {
             "id": 3,
@@ -2439,7 +2439,7 @@
     ],
     "metadata": {
       "created": "2025-06-17T03:27:33.165Z",
-      "updated": "2025-06-17T06:19:13.469Z",
+      "updated": "2025-06-17T06:43:59.354Z",
       "description": "Development working tag - corresponds to develop Git branch"
     }
   }

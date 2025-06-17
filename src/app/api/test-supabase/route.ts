@@ -4,10 +4,9 @@ import { supabase } from '@/lib/supabase'
 export async function GET() {
   try {
     // Supabase 연결 테스트
-    const { data, error } = await supabase
+    const { data, error, count } = await supabase
       .from('notices')
-      .select('count(*)')
-      .single()
+      .select('*', { count: 'exact' })
 
     if (error) {
       console.error('Supabase connection error:', error)
@@ -21,15 +20,16 @@ export async function GET() {
       )
     }
 
-    return NextResponse.json({
-      success: true,
-      message: 'Supabase 연결 성공! 🎉',
-      data: {
-        timestamp: new Date().toISOString(),
-        noticesCount: data?.count || 0,
-        supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/^https?:\/\//, '') || 'Not configured'
-      }
-    })
+          return NextResponse.json({
+        success: true,
+        message: 'Supabase 연결 성공! 🎉',
+        data: {
+          timestamp: new Date().toISOString(),
+          noticesCount: count || 0,
+          noticesData: data?.length || 0,
+          supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/^https?:\/\//, '') || 'Not configured'
+        }
+      })
 
   } catch (error) {
     console.error('Unexpected error:', error)
