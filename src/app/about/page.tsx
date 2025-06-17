@@ -58,56 +58,133 @@ export default function AboutPage() {
       </section>
 
       {/* Company Story */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">우리의 이야기</h2>
-            <p className="text-muted-foreground">
-              기술을 통해 세상을 더 나은 곳으로 만들고자 하는 열정으로 시작되었습니다.
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">우리의 이야기</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              2020년, 기술을 통해 세상을 더 나은 곳으로 만들고자 하는 열정으로 시작된 GanziCorp는 
+              현재 국내외 50여 개 기업의 디지털 혁신 파트너로 성장했습니다.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold">비전</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                기술 혁신을 통해 고객의 비즈니스 가치를 극대화하고, 
-                지속 가능한 디지털 생태계를 구축하여 모든 이해관계자가 
-                함께 성장할 수 있는 미래를 만들어갑니다.
-              </p>
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-2xl font-bold text-primary mb-4">🎯 비전</h3>
+                <p className="text-muted-foreground leading-relaxed text-lg">
+                  기술 혁신을 통해 고객의 비즈니스 가치를 극대화하고, 
+                  지속 가능한 디지털 생태계를 구축하여 모든 이해관계자가 
+                  함께 성장할 수 있는 미래를 만들어갑니다.
+                </p>
+              </div>
               
-              <h3 className="text-2xl font-semibold">미션</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                최고 수준의 기술 전문성과 창의적인 문제 해결 능력을 바탕으로, 
-                고객의 도전과제를 혁신적인 솔루션으로 해결하여 
-                비즈니스 성공을 함께 이루어갑니다.
-              </p>
+              <div>
+                <h3 className="text-2xl font-bold text-primary mb-4">🚀 미션</h3>
+                <p className="text-muted-foreground leading-relaxed text-lg">
+                  최고 수준의 기술 전문성과 창의적인 문제 해결 능력을 바탕으로, 
+                  고객의 도전과제를 혁신적인 솔루션으로 해결하여 
+                  비즈니스 성공을 함께 이루어갑니다.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-bold text-primary mb-4">💡 철학</h3>
+                <p className="text-muted-foreground leading-relaxed text-lg">
+                  &ldquo;기술은 수단이고, 고객의 성공이 목적이다&rdquo;라는 철학 하에 
+                  최신 기술 트렌드를 선도하면서도 실용적이고 지속 가능한 
+                  솔루션을 제공합니다.
+                </p>
+              </div>
             </div>
             
-            <Card className="hover-lift">
-              <CardHeader>
-                <CardTitle>GanziCorp at a Glance</CardTitle>
-                <CardDescription>주요 현황 및 성과</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">설립년도</span>
-                  <span className="font-semibold">2024</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">본사 위치</span>
-                  <span className="font-semibold">서울, 대한민국</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">주요 기술</span>
-                  <span className="font-semibold">Web, AI, Cloud</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">팀 규모</span>
-                  <span className="font-semibold">10+ 전문가</span>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="grid gap-6">
+              <Card className="hover-lift">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <span className="text-primary font-bold">📊</span>
+                    </div>
+                    회사 현황
+                  </CardTitle>
+                  <CardDescription>GanziCorp의 주요 지표와 성과</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="text-center p-4 bg-muted/50 rounded-lg">
+                      <div className="text-2xl font-bold text-primary">2020</div>
+                      <div className="text-sm text-muted-foreground">설립년도</div>
+                    </div>
+                    <div className="text-center p-4 bg-muted/50 rounded-lg">
+                      <div className="text-2xl font-bold text-primary">50+</div>
+                      <div className="text-sm text-muted-foreground">고객사</div>
+                    </div>
+                    <div className="text-center p-4 bg-muted/50 rounded-lg">
+                      <div className="text-2xl font-bold text-primary">100+</div>
+                      <div className="text-sm text-muted-foreground">프로젝트</div>
+                    </div>
+                    <div className="text-center p-4 bg-muted/50 rounded-lg">
+                      <div className="text-2xl font-bold text-primary">15+</div>
+                      <div className="text-sm text-muted-foreground">전문가</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="hover-lift">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center">
+                      <span className="text-secondary font-bold">🏆</span>
+                    </div>
+                    주요 성과
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">고객 만족도</span>
+                    <Badge variant="secondary">98%</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">프로젝트 성공률</span>
+                    <Badge variant="secondary">100%</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">재계약률</span>
+                    <Badge variant="secondary">85%</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">기술 특허</span>
+                    <Badge variant="secondary">3건</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* Timeline */}
+          <div className="bg-muted/30 rounded-2xl p-8">
+            <h3 className="text-2xl font-bold text-center mb-8">성장 히스토리</h3>
+            <div className="grid md:grid-cols-4 gap-6">
+              {[
+                { year: "2020", title: "회사 설립", desc: "혁신적인 기술 서비스 회사로 출발" },
+                { year: "2021", title: "사업 확장", desc: "AI 및 클라우드 서비스 영역 진출" },
+                { year: "2022", title: "글로벌 진출", desc: "해외 고객사 확보 및 서비스 확대" },
+                { year: "2023", title: "기술 혁신", desc: "자체 플랫폼 개발 및 특허 출원" }
+              ].map((milestone, index) => (
+                <Card key={index} className="text-center hover-lift">
+                  <CardHeader>
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <span className="text-2xl font-bold text-primary">{milestone.year}</span>
+                    </div>
+                    <CardTitle className="text-lg">{milestone.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">{milestone.desc}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>

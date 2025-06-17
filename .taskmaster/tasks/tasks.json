@@ -1487,7 +1487,7 @@
         "dependencies": [
           4
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1495,7 +1495,7 @@
             "description": "Develop the main content for the Home page, including hero section, key features, and call-to-action",
             "dependencies": [],
             "details": "Write compelling copy, select appropriate images, and determine layout structure",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 2,
@@ -1505,7 +1505,7 @@
               1
             ],
             "details": "Implement responsive design, ensure proper spacing, and apply color scheme",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 3,
@@ -1513,7 +1513,7 @@
             "description": "Develop the main content for the About page, including company history, mission, and values",
             "dependencies": [],
             "details": "Write informative copy, select relevant images, and structure the content logically",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 4,
@@ -1523,7 +1523,7 @@
               3
             ],
             "details": "Ensure consistency with Home page styling while highlighting unique elements",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 5,
@@ -1531,7 +1531,7 @@
             "description": "Develop the main content for the Services page, detailing offered services and their benefits",
             "dependencies": [],
             "details": "Write clear descriptions for each service, create service icons or images, and structure the layout",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 6,
@@ -1541,7 +1541,7 @@
               5
             ],
             "details": "Implement grid or flexbox layout for services, ensure consistent styling with other pages",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 7,
@@ -1549,7 +1549,7 @@
             "description": "Develop the main content for the Team page, including team member profiles and roles",
             "dependencies": [],
             "details": "Write brief bios for each team member, obtain and format profile pictures, and determine layout",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 8,
@@ -1559,7 +1559,7 @@
               7
             ],
             "details": "Create a responsive grid for team members, ensure consistent styling with other pages",
-            "status": "pending"
+            "status": "done"
           }
         ]
       },
@@ -2439,7 +2439,7 @@
     ],
     "metadata": {
       "created": "2025-06-17T03:27:33.165Z",
-      "updated": "2025-06-17T08:07:48.965Z",
+      "updated": "2025-06-17T08:20:35.244Z",
       "description": "Development working tag - corresponds to develop Git branch"
     }
   }

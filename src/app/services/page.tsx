@@ -192,44 +192,178 @@ export default function ServicesPage() {
       </section>
 
       {/* Technology Stack */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-4">기술 스택</h2>
-          <p className="text-muted-foreground mb-8">
-            검증된 최신 기술들을 활용하여 안정적이고 확장 가능한 솔루션을 제공합니다.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">기술 스택</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              검증된 최신 기술들을 활용하여 안정적이고 확장 가능한 솔루션을 제공합니다.
+              지속적인 기술 연구를 통해 최적의 개발 환경을 구축합니다.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-4 gap-8">
             {[
-              "React", "Next.js", "TypeScript", "Node.js",
-              "Python", "AWS", "Docker", "PostgreSQL",
-              "MongoDB", "Redis", "GraphQL", "Tailwind CSS"
-            ].map((tech, index) => (
-              <Badge key={index} variant="secondary" className="p-3 text-sm">
-                {tech}
-              </Badge>
+              {
+                category: "Frontend",
+                technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Vue.js"],
+                color: "bg-blue-500/10 text-blue-600"
+              },
+              {
+                category: "Backend",
+                technologies: ["Node.js", "Python", "Java", "Express", "FastAPI"],
+                color: "bg-green-500/10 text-green-600"
+              },
+              {
+                category: "Database",
+                technologies: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "Supabase"],
+                color: "bg-purple-500/10 text-purple-600"
+              },
+              {
+                category: "DevOps",
+                technologies: ["AWS", "Docker", "Kubernetes", "GitHub Actions", "Terraform"],
+                color: "bg-orange-500/10 text-orange-600"
+              }
+            ].map((stack, index) => (
+              <Card key={index} className="hover-lift">
+                <CardHeader>
+                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${stack.color}`}>
+                    <Code className="h-6 w-6" />
+                  </div>
+                  <CardTitle className="text-lg">{stack.category}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    {stack.technologies.map((tech, techIndex) => (
+                      <Badge key={techIndex} variant="outline" className="mr-2 mb-2">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="py-20 px-4 bg-muted/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+              왜 GanziCorp를 선택해야 할까요?
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              풍부한 경험과 전문성을 바탕으로 고객의 성공을 위해 최선을 다합니다.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: "🎯",
+                title: "목표 중심 접근",
+                description: "비즈니스 목표를 명확히 이해하고, 이를 달성하기 위한 최적의 기술 솔루션을 제공합니다.",
+                stats: "100% 프로젝트 성공률"
+              },
+              {
+                icon: "⚡",
+                title: "빠른 개발 속도",
+                description: "효율적인 개발 프로세스와 최신 도구를 활용하여 빠르고 안정적인 개발을 진행합니다.",
+                stats: "평균 30% 개발 시간 단축"
+              },
+              {
+                icon: "🔒",
+                title: "보안과 품질",
+                description: "엄격한 코드 리뷰와 보안 검토를 통해 높은 품질과 안전성을 보장합니다.",
+                stats: "제로 보안 사고"
+              }
+            ].map((benefit, index) => (
+              <Card key={index} className="text-center hover-lift">
+                <CardHeader>
+                  <div className="text-4xl mb-4">{benefit.icon}</div>
+                  <CardTitle className="text-xl mb-3">{benefit.title}</CardTitle>
+                  <CardDescription className="text-base leading-relaxed mb-4">
+                    {benefit.description}
+                  </CardDescription>
+                  <Badge variant="secondary" className="text-sm">
+                    {benefit.stats}
+                  </Badge>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Client Success Stories */}
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+              고객 성공 사례
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              다양한 산업의 고객들과 함께 이룬 성공 스토리를 확인해보세요.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                industry: "E-commerce",
+                title: "온라인 쇼핑몰 성능 최적화",
+                result: "페이지 로딩 속도 70% 개선",
+                description: "대규모 트래픽을 처리할 수 있는 확장 가능한 아키텍처 구축"
+              },
+              {
+                industry: "Healthcare",
+                title: "의료 데이터 관리 시스템",
+                result: "업무 효율성 50% 향상",
+                description: "HIPAA 준수 의료 정보 관리 플랫폼 개발 및 구축"
+              },
+              {
+                industry: "FinTech",
+                title: "금융 서비스 플랫폼",
+                result: "고객 만족도 95% 달성",
+                description: "보안성과 사용성을 모두 만족하는 핀테크 솔루션 개발"
+              }
+            ].map((story, index) => (
+              <Card key={index} className="hover-lift">
+                <CardHeader>
+                  <Badge variant="outline" className="w-fit mb-3">{story.industry}</Badge>
+                  <CardTitle className="text-lg mb-3">{story.title}</CardTitle>
+                  <div className="text-2xl font-bold text-primary mb-3">{story.result}</div>
+                  <CardDescription>{story.description}</CardDescription>
+                </CardHeader>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-4 bg-primary/5">
+      <section className="py-20 px-4 bg-gradient-to-r from-primary to-secondary">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-4">
-            프로젝트를 시작할 준비가 되셨나요?
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            프로젝트를 시작해보세요
           </h2>
-          <p className="text-muted-foreground mb-8">
-            전문가와 상담을 통해 최적의 솔루션을 찾아보세요.
+          <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
+            전문가와의 상담을 통해 비즈니스에 최적화된 솔루션을 찾아보세요. 
+            무료 컨설팅으로 프로젝트의 가능성을 확인해보실 수 있습니다.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80">
-              무료 상담 신청
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </Button>
-            <Button size="lg" variant="outline">
-              포트폴리오 보기
-            </Button>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Link href="/contact">
+              <Button size="lg" className="bg-white text-primary hover:bg-gray-100 font-semibold">
+                무료 상담 신청
+              </Button>
+            </Link>
+            <Link href="/about">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                회사 소개 보기
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
