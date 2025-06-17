@@ -26,6 +26,14 @@ export default function HomePage() {
           <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-ganzicorp-primary font-semibold">
             문의하기
           </Button>
+          <Button 
+            variant="ghost" 
+            size="lg" 
+            className="text-white border border-white/30 hover:bg-white/10 font-semibold"
+            onClick={() => window.open('/test', '_blank')}
+          >
+            🧪 테스트 페이지
+          </Button>
         </div>
         
         {/* Badge 컴포넌트로 브랜드 테마 테스트 */}
