@@ -1349,7 +1349,7 @@
         "dependencies": [
           1
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1387,7 +1387,7 @@
               1
             ],
             "details": "Navigate to Project Settings > API, copy anon public and service_role keys",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 5,
@@ -1397,7 +1397,7 @@
               4
             ],
             "details": "Add SUPABASE_URL and SUPABASE_ANON_KEY to .env file, ensure it's gitignored",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 6,
@@ -1410,7 +1410,7 @@
               5
             ],
             "details": "Write a simple script to connect to Supabase and perform a basic query",
-            "status": "pending"
+            "status": "done"
           }
         ]
       },
@@ -2439,7 +2439,7 @@
     ],
     "metadata": {
       "created": "2025-06-17T03:27:33.165Z",
-      "updated": "2025-06-17T06:52:31.098Z",
+      "updated": "2025-06-17T06:53:24.586Z",
       "description": "Development working tag - corresponds to develop Git branch"
     }
   }
