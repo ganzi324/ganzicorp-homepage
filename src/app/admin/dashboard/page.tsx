@@ -95,7 +95,7 @@ export default function AdminDashboardPage() {
   ]
 
   return (
-    <AdminLayout title="대시보드">
+    <AdminLayout>
       {/* 통계 */}
       <div className="mb-12">
         <h2 className="text-2xl font-bold mb-8">시스템 현황</h2>

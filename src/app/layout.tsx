@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import React from 'react';
 import { AuthProvider } from '@/components/auth/AuthProvider';
 import { Toaster } from '@/components/ui/toaster';
+import StructuredData from '@/components/seo/StructuredData';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -61,6 +62,27 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
+        <StructuredData
+          organization={{
+            name: "GanziCorp",
+            url: "https://ganzicorp.com",
+            description: "최신 기술로 비즈니스 혁신을 이끄는 GanziCorp입니다.",
+            contactPoint: {
+              telephone: "+82-2-1234-5678",
+              contactType: "customer service",
+              email: "contact@ganzicorp.com"
+            }
+          }}
+          website={{
+            name: "GanziCorp",
+            url: "https://ganzicorp.com",
+            description: "혁신적인 기술 솔루션을 제공하는 GanziCorp 공식 웹사이트",
+            publisher: {
+              name: "GanziCorp",
+              url: "https://ganzicorp.com"
+            }
+          }}
+        />
         <AuthProvider>
           <div id="root">{children}</div>
           <Toaster />

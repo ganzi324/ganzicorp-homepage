@@ -1,0 +1,102 @@
+# Page snapshot
+
+```yaml
+- banner:
+  - link "G GanziCorp":
+    - /url: /
+  - navigation:
+    - link "홈":
+      - /url: /
+    - link "회사소개":
+      - /url: /about
+    - link "서비스":
+      - /url: /services
+    - link "공지사항":
+      - /url: /notices
+    - link "문의하기":
+      - /url: /contact
+  - link "로그인":
+    - /url: /auth/login
+  - link "회원가입":
+    - /url: /auth/signup
+- main:
+  - img
+  - text: 로그인 GanziCorp 계정으로 로그인하세요 이메일
+  - textbox "이메일"
+  - text: 비밀번호
+  - textbox "비밀번호"
+  - button:
+    - img
+  - button "로그인"
+  - text: 계정이 없으신가요?
+  - link "회원가입":
+    - /url: /auth/signup
+  - link "비밀번호를 잊으셨나요?":
+    - /url: /auth/forgot-password
+- contentinfo:
+  - text: G GanziCorp
+  - paragraph: 혁신적인 기술 솔루션으로 비즈니스의 성장을 돕는 전문 기술 서비스 회사입니다.
+  - img
+  - link "+82-2-1234-5678":
+    - /url: tel:+82-2-1234-5678
+  - img
+  - link "contact@ganzicorp.com":
+    - /url: mailto:contact@ganzicorp.com
+  - img
+  - text: 서울특별시 강남구 테헤란로 123
+  - heading "회사" [level=3]
+  - list:
+    - listitem:
+      - link "회사소개":
+        - /url: /about
+    - listitem:
+      - link "서비스":
+        - /url: /services
+    - listitem:
+      - link "채용정보":
+        - /url: /careers
+    - listitem:
+      - link "파트너십":
+        - /url: /partnership
+  - heading "지원" [level=3]
+  - list:
+    - listitem:
+      - link "고객지원":
+        - /url: /support
+    - listitem:
+      - link "문의하기":
+        - /url: /contact
+    - listitem:
+      - link "FAQ":
+        - /url: /faq
+    - listitem:
+      - link "공지사항":
+        - /url: /notices
+  - heading "법적 정보" [level=3]
+  - list:
+    - listitem:
+      - link "이용약관":
+        - /url: /terms
+    - listitem:
+      - link "개인정보처리방침":
+        - /url: /privacy
+    - listitem:
+      - link "쿠키정책":
+        - /url: /cookies
+    - listitem:
+      - link "법적고지":
+        - /url: /legal
+  - text: © 2025 GanziCorp. All rights reserved.
+  - link "GitHub":
+    - /url: https://github.com/ganzicorp
+    - img
+  - link "Twitter":
+    - /url: https://twitter.com/ganzicorp
+    - img
+  - link "LinkedIn":
+    - /url: https://linkedin.com/company/ganzicorp
+    - img
+- alert
+- button "Open Next.js Dev Tools":
+  - img
+```

@@ -6,8 +6,16 @@ import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
+interface NoticeFormData {
+  title: string
+  content: string
+  category: string
+  published: boolean
+  isPinned: boolean
+}
+
 interface EditNoticePageProps {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 // 임시 데이터 - 실제로는 API에서 가져올 예정
@@ -62,7 +70,8 @@ const getNoticeById = async (id: string) => {
 }
 
 export async function generateMetadata({ params }: EditNoticePageProps): Promise<Metadata> {
-  const notice = await getNoticeById(params.id)
+  const resolvedParams = await params
+  const notice = await getNoticeById(resolvedParams.id)
   
   if (!notice) {
     return {
@@ -77,15 +86,16 @@ export async function generateMetadata({ params }: EditNoticePageProps): Promise
 }
 
 export default async function EditNoticePage({ params }: EditNoticePageProps) {
-  const notice = await getNoticeById(params.id)
+  const resolvedParams = await params
+  const notice = await getNoticeById(resolvedParams.id)
 
   if (!notice) {
     notFound()
   }
 
-  const handleSubmit = async (data: any, action: 'draft' | 'publish') => {
+  const handleSubmit = async (data: NoticeFormData, action: 'draft' | 'publish') => {
     try {
-      const response = await fetch(`/api/notices/${params.id}`, {
+      const response = await fetch(`/api/notices/${resolvedParams.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

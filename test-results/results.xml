@@ -1,0 +1,204 @@
+<testsuites id="" name="" tests="28" failures="2" skipped="25" errors="0" time="18.480515999999998">
+<testsuite name="auth.spec.ts" timestamp="2025-06-18T03:45:06.613Z" hostname="chromium" tests="5" failures="2" skipped="2" time="14.56" errors="0">
+<testcase name="Authentication Tests › 로그인 페이지가 정상적으로 로드되는지 확인" classname="auth.spec.ts" time="4.342">
+<failure message="auth.spec.ts:4:7 로그인 페이지가 정상적으로 로드되는지 확인" type="FAILURE">
+<![CDATA[  [chromium] › auth.spec.ts:4:7 › Authentication Tests › 로그인 페이지가 정상적으로 로드되는지 확인 ───────────────────
+
+    Error: expect.toBeVisible: Error: strict mode violation: getByText('로그인') resolved to 3 elements:
+        1) <div class="font-semibold tracking-tight text-2xl text-center">로그인</div> aka locator('div').filter({ hasText: /^로그인$/ })
+        2) <div class="text-sm text-muted-foreground text-center">GanziCorp 계정으로 로그인하세요</div> aka getByText('GanziCorp 계정으로 로그인하세요')
+        3) <button type="submit" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full">로그인</button> aka getByRole('button', { name: '로그인' })
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByText('로그인')
+
+
+      12 |     
+      13 |     // 페이지 제목과 설명 확인
+    > 14 |     await expect(page.getByText('로그인')).toBeVisible();
+         |                                         ^
+      15 |     await expect(page.getByText('GanziCorp 계정으로 로그인하세요')).toBeVisible();
+      16 |   });
+      17 |
+        at /home/ganzi324/dev/test/ganzi-homepage/tests/auth.spec.ts:14:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/auth-Authentication-Tests-로그인-페이지가-정상적으로-로드되는지-확인-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/auth-Authentication-Tests-로그인-페이지가-정상적으로-로드되는지-확인-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/auth-Authentication-Tests-로그인-페이지가-정상적으로-로드되는지-확인-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|auth-Authentication-Tests-로그인-페이지가-정상적으로-로드되는지-확인-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|auth-Authentication-Tests-로그인-페이지가-정상적으로-로드되는지-확인-chromium/video.webm]]
+
+[[ATTACHMENT|auth-Authentication-Tests-로그인-페이지가-정상적으로-로드되는지-확인-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication Tests › 잘못된 자격증명으로 로그인 실패 확인" classname="auth.spec.ts" time="1.267">
+</testcase>
+<testcase name="Authentication Tests › 보호된 라우트 접근 차단 확인" classname="auth.spec.ts" time="8.951">
+<failure message="auth.spec.ts:30:7 보호된 라우트 접근 차단 확인" type="FAILURE">
+<![CDATA[  [chromium] › auth.spec.ts:30:7 › Authentication Tests › 보호된 라우트 접근 차단 확인 ─────────────────────────
+
+    Error: Timed out 5000ms waiting for expect(locator).toHaveURL(expected)
+
+    Locator: locator(':root')
+    Expected pattern: /.*admin.*login/
+    Received string:  "http://localhost:3000/admin"
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+      - waiting for locator(':root')
+        9 × locator resolved to <html lang="ko">…</html>
+          - unexpected value "http://localhost:3000/admin"
+
+
+      33 |     
+      34 |     // 관리자 로그인 페이지로 리다이렉트되는지 확인
+    > 35 |     await expect(page).toHaveURL(/.*admin.*login/);
+         |                        ^
+      36 |     await expect(page.getByText('관리자 로그인')).toBeVisible();
+      37 |   });
+      38 |
+        at /home/ganzi324/dev/test/ganzi-homepage/tests/auth.spec.ts:35:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/auth-Authentication-Tests-보호된-라우트-접근-차단-확인-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/auth-Authentication-Tests-보호된-라우트-접근-차단-확인-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/auth-Authentication-Tests-보호된-라우트-접근-차단-확인-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|auth-Authentication-Tests-보호된-라우트-접근-차단-확인-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|auth-Authentication-Tests-보호된-라우트-접근-차단-확인-chromium/video.webm]]
+
+[[ATTACHMENT|auth-Authentication-Tests-보호된-라우트-접근-차단-확인-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication Tests › 입력 필드 검증 확인" classname="auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Tests › 이메일 형식 검증 확인" classname="auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="homepage.spec.ts" timestamp="2025-06-18T03:45:06.613Z" hostname="chromium" tests="4" failures="0" skipped="4" time="0" errors="0">
+<testcase name="Homepage Tests › 홈페이지가 정상적으로 로드되는지 확인" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Homepage Tests › 네비게이션 메뉴가 정상 작동하는지 확인" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Homepage Tests › 반응형 디자인이 정상 작동하는지 확인" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Homepage Tests › 페이지 로딩 시간이 적절한지 확인" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="performance.spec.ts" timestamp="2025-06-18T03:45:06.613Z" hostname="chromium" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Performance Tests › 페이지 로딩 성능 테스트" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › 리소스 로딩 최적화 테스트" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › JavaScript 번들 크기 테스트" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › 메모리 사용량 테스트" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › 이미지 최적화 테스트" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › 폰트 로딩 성능 테스트" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › CSS 최적화 테스트" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="responsive.spec.ts" timestamp="2025-06-18T03:45:06.613Z" hostname="chromium" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Responsive Design Tests › Mobile Small (375x667) 반응형 테스트" classname="responsive.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design Tests › Mobile Medium (414x896) 반응형 테스트" classname="responsive.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design Tests › Tablet Portrait (768x1024) 반응형 테스트" classname="responsive.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design Tests › Tablet Landscape (1024x768) 반응형 테스트" classname="responsive.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design Tests › Desktop (1920x1080) 반응형 테스트" classname="responsive.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design Tests › Large Desktop (2560x1440) 반응형 테스트" classname="responsive.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design Tests › 가로/세로 방향 전환 테스트" classname="responsive.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="uat.spec.ts" timestamp="2025-06-18T03:45:06.613Z" hostname="chromium" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="User Acceptance Testing (UAT) › 시나리오 1: 비즈니스 의사결정자 여정 › 첫 방문자가 회사 서비스를 이해하고 연락 의향을 갖는 과정" classname="uat.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Acceptance Testing (UAT) › 시나리오 2: 기술 담당자 탐색 › 기술적 역량과 구체적 솔루션 정보 확인" classname="uat.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Acceptance Testing (UAT) › 시나리오 3: 모바일 사용자 경험 › 모바일 환경에서의 편리한 브라우징" classname="uat.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Acceptance Testing (UAT) › 시나리오 4: 접근성 테스트 › 다양한 사용자 환경에 대한 접근성 확보" classname="uat.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Acceptance Testing (UAT) › 시나리오 5: 전체 기능 통합 테스트 › 모든 주요 기능이 연동되어 정상 작동하는지 확인" classname="uat.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>

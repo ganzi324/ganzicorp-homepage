@@ -48,13 +48,11 @@ export default function NotFound() {
               </Link>
             </Button>
             
-            <Button 
-              variant="ghost" 
-              size="lg"
-              onClick={() => window.history.back()}
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              이전 페이지
+            <Button asChild variant="ghost" size="lg">
+              <Link href="javascript:history.back()">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                이전 페이지
+              </Link>
             </Button>
           </div>
         </div>

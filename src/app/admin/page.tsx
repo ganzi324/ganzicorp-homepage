@@ -11,7 +11,10 @@ import {
   Plus,
   Edit,
   Trash2,
-  Calendar
+  Calendar,
+  MessageSquare,
+  Clock,
+  CheckCircle
 } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -29,25 +32,25 @@ const stats = [
     icon: FileText
   },
   {
-    title: '총 사용자',
-    value: '1,234',
-    change: '+12',
+    title: '총 문의',
+    value: '156',
+    change: '+8',
     changeType: 'increase' as const,
-    icon: Users
+    icon: MessageSquare
   },
   {
-    title: '이번 달 조회수',
-    value: '12,543',
-    change: '+5.2%',
+    title: '대기 중인 문의',
+    value: '12',
+    change: '+3',
     changeType: 'increase' as const,
-    icon: Eye
+    icon: Clock
   },
   {
-    title: '활성 공지사항',
-    value: '18',
-    change: '+2',
+    title: '해결된 문의',
+    value: '144',
+    change: '+5',
     changeType: 'increase' as const,
-    icon: TrendingUp
+    icon: CheckCircle
   }
 ]
 

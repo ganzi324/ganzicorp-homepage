@@ -1,0 +1,128 @@
+# Page snapshot
+
+```yaml
+- link "G Admin":
+  - /url: /admin
+- navigation:
+  - link "대시보드":
+    - /url: /admin
+    - img
+    - text: 대시보드
+  - link "공지사항 관리":
+    - /url: /admin/notices
+    - img
+    - text: 공지사항 관리
+  - link "문의 관리":
+    - /url: /admin/inquiries
+    - img
+    - text: 문의 관리
+  - link "사용자 관리":
+    - /url: /admin/users
+    - img
+    - text: 사용자 관리
+  - link "설정":
+    - /url: /admin/settings
+    - img
+    - text: 설정
+- text: A
+- paragraph: 관리자
+- paragraph: admin@ganzicorp.com
+- button:
+  - img
+- button "로그아웃":
+  - img
+  - text: 로그아웃
+- banner:
+  - heading "관리자 대시보드" [level=1]
+  - img
+  - textbox "검색..."
+  - button "알림 센터":
+    - img
+  - link "홈페이지":
+    - /url: /
+    - img
+    - text: 홈페이지
+- main:
+  - heading "대시보드" [level=1]
+  - paragraph: GanziCorp 관리자 대시보드에 오신 것을 환영합니다
+  - button "새 공지사항":
+    - img
+    - text: 새 공지사항
+  - paragraph: 총 공지사항
+  - paragraph: "24"
+  - paragraph: +3 지난 달 대비
+  - img
+  - paragraph: 총 문의
+  - paragraph: "156"
+  - paragraph: +8 지난 달 대비
+  - img
+  - paragraph: 대기 중인 문의
+  - paragraph: "12"
+  - paragraph: +3 지난 달 대비
+  - img
+  - paragraph: 해결된 문의
+  - paragraph: "144"
+  - paragraph: +5 지난 달 대비
+  - img
+  - text: 최근 공지사항
+  - button "전체 보기"
+  - heading "GanziCorp 공식 홈페이지 오픈" [level=4]
+  - img
+  - text: 1월 15일
+  - img
+  - text: 245회 관리자 발행됨
+  - button:
+    - img
+  - button:
+    - img
+  - heading "새로운 AI 솔루션 서비스 출시" [level=4]
+  - img
+  - text: 1월 10일
+  - img
+  - text: 189회 개발팀 발행됨
+  - button:
+    - img
+  - button:
+    - img
+  - heading "2024년 첫 번째 기술 세미나 개최 안내" [level=4]
+  - img
+  - text: 1월 5일
+  - img
+  - text: 0회 기획팀 임시저장
+  - button:
+    - img
+  - button:
+    - img
+  - heading "설날 연휴 운영 안내" [level=4]
+  - img
+  - text: 1월 3일
+  - img
+  - text: 98회 관리자 발행됨
+  - button:
+    - img
+  - button:
+    - img
+  - text: 빠른 작업
+  - button "새 공지사항 작성":
+    - img
+    - text: 새 공지사항 작성
+  - button "사용자 관리":
+    - img
+    - text: 사용자 관리
+  - button "임시저장 목록":
+    - img
+    - text: 임시저장 목록
+  - button "통계 보기":
+    - img
+    - text: 통계 보기
+  - text: 시스템 상태
+  - paragraph: 데이터베이스
+  - paragraph: 정상 작동
+  - paragraph: API 서버
+  - paragraph: 정상 작동
+  - paragraph: 백업 시스템
+  - paragraph: 점검 중
+- alert
+- button "Open Next.js Dev Tools":
+  - img
+```

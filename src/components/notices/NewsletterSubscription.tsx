@@ -47,7 +47,7 @@ export default function NewsletterSubscription() {
         description: "뉴스레터 구독이 완료되었습니다. 최신 소식을 이메일로 받아보세요.",
       })
       setEmail('')
-    } catch (error) {
+    } catch {
       toast({
         title: "구독 실패",
         description: "뉴스레터 구독 중 오류가 발생했습니다. 다시 시도해주세요.",

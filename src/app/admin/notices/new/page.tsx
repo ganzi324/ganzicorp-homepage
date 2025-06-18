@@ -1,10 +1,17 @@
 import { Metadata } from 'next'
 import AdminLayout from '@/components/layout/AdminLayout'
 import NoticeForm from '@/components/forms/NoticeForm'
-
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
+
+interface NoticeFormData {
+  title: string
+  content: string
+  category: string
+  published: boolean
+  isPinned: boolean
+}
 
 export const metadata: Metadata = {
   title: '새 공지사항 작성 | 관리자',
@@ -12,7 +19,7 @@ export const metadata: Metadata = {
 }
 
 export default function NewNoticePage() {
-  const handleSubmit = async (data: any, action: 'draft' | 'publish') => {
+  const handleSubmit = async (data: NoticeFormData, action: 'draft' | 'publish') => {
     try {
       const response = await fetch('/api/notices', {
         method: 'POST',
