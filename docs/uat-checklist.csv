@@ -1,0 +1,43 @@
+카테고리,테스트 항목,우선순위,상태,담당자,비고
+기본 기능,홈페이지 접속 (3초 이내),High,Pending,QA팀,성능 기준 중요
+기본 기능,모든 링크 정상 작동,High,Pending,QA팀,404 에러 확인
+기본 기능,버튼 클릭 반응,High,Pending,QA팀,호버 효과 포함
+기본 기능,페이지 간 네비게이션,High,Pending,QA팀,뒤로가기 버튼 테스트
+브라우저 호환성,Chrome 최신 버전,High,Pending,QA팀,주요 사용자층
+브라우저 호환성,Firefox 최신 버전,Medium,Pending,QA팀,크로스 브라우저
+브라우저 호환성,Safari (macOS/iOS),Medium,Pending,QA팀,Apple 생태계
+브라우저 호환성,Edge 최신 버전,Medium,Pending,QA팀,기업 사용자
+모바일 반응형,iPhone (375px),High,Pending,QA팀,Mobile First
+모바일 반응형,iPhone Plus (414px),Medium,Pending,QA팀,대형 모바일
+모바일 반응형,iPad (768px),Medium,Pending,QA팀,태블릿 사용자
+모바일 반응형,iPad Pro (1024px),Low,Pending,QA팀,대형 태블릿
+모바일 반응형,세로/가로 모드 전환,High,Pending,QA팀,방향 전환 테스트
+모바일 반응형,터치 타겟 44px 이상,High,Pending,QA팀,접근성 기준
+성능,페이지 로딩 3초 이내 (데스크톱),High,Pending,Dev팀,Core Web Vitals
+성능,페이지 로딩 5초 이내 (모바일),High,Pending,Dev팀,모바일 성능
+성능,First Contentful Paint 1.5초,Medium,Pending,Dev팀,사용자 체감 성능
+성능,메모리 사용량 100MB 이하,Medium,Pending,Dev팀,브라우저 안정성
+성능,JavaScript 번들 5MB 이하,Medium,Pending,Dev팀,네트워크 효율성
+콘텐츠,회사 소개 메시지 명확성,High,Pending,Content팀,첫인상 중요
+콘텐츠,서비스 설명 이해 가능,High,Pending,Content팀,핵심 가치 전달
+콘텐츠,연락처 정보 정확성,High,Pending,Content팀,비즈니스 연결
+콘텐츠,실적 정보 확인 (100+ 프로젝트),Medium,Pending,Content팀,신뢰성 구축
+콘텐츠,회사 경험 정보 (4년),Medium,Pending,Content팀,전문성 어필
+사용자 경험,직관적 인터페이스,High,Pending,UX팀,사용성 핵심
+사용자 경험,전문적 디자인 인상,High,Pending,UX팀,브랜드 이미지
+사용자 경험,신뢰감 조성,High,Pending,UX팀,비즈니스 목표
+사용자 경험,정보 찾기 용이성,Medium,Pending,UX팀,사용자 만족도
+접근성,키보드 탐색 가능,Medium,Pending,QA팀,Tab 키 테스트
+접근성,스크린 리더 호환,Medium,Pending,QA팀,alt text 확인
+접근성,색상 대비 4.5:1 이상,Medium,Pending,QA팀,WCAG 기준
+접근성,텍스트 크기 16px 이상,High,Pending,QA팀,가독성 기준
+접근성,포커스 표시 명확성,Medium,Pending,QA팀,키보드 사용자
+비즈니스 목표,서비스 이해도 향상,High,Pending,Product팀,5분 이내 이해
+비즈니스 목표,연락 의향 생성,High,Pending,Product팀,전환율 목표
+비즈니스 목표,전문성 인상 형성,High,Pending,Product팀,브랜드 포지셔닝
+비즈니스 목표,기술적 신뢰성 확인,Medium,Pending,Product팀,B2B 고객
+시나리오 테스트,비즈니스 의사결정자 여정,High,Pending,전체팀,핵심 시나리오
+시나리오 테스트,기술 담당자 탐색,High,Pending,전체팀,기술 검증
+시나리오 테스트,모바일 사용자 경험,High,Pending,전체팀,모바일 우선
+시나리오 테스트,다중 브라우저 호환성,Medium,Pending,전체팀,호환성 검증
+시나리오 테스트,접근성 준수,Medium,Pending,전체팀,포용적 설계 
