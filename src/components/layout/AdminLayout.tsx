@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { NotificationCenter } from '@/components/ui/notification-center'
 import { 
   Menu, 
   X, 
@@ -14,9 +14,9 @@ import {
   Users,
   Settings,
   LogOut,
-  Bell,
   Search,
-  ChevronDown
+  ChevronDown,
+  MessageSquare
 } from 'lucide-react'
 
 interface AdminLayoutProps {
@@ -33,6 +33,11 @@ const sidebarItems = [
     title: '공지사항 관리',
     href: '/admin/notices',
     icon: FileText
+  },
+  {
+    title: '문의 관리',
+    href: '/admin/inquiries',
+    icon: MessageSquare
   },
   {
     title: '사용자 관리',
@@ -157,16 +162,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 </div>
               </div>
 
-              {/* 알림 */}
-              <Button variant="ghost" size="sm" className="relative">
-                <Bell className="h-5 w-5" />
-                <Badge 
-                  variant="destructive" 
-                  className="absolute -top-1 -right-1 w-5 h-5 text-xs p-0 flex items-center justify-center"
-                >
-                  3
-                </Badge>
-              </Button>
+              {/* 알림 센터 */}
+              <NotificationCenter />
 
               {/* 홈페이지로 이동 */}
               <Button variant="outline" size="sm" asChild>
