@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 
 interface NoticePageProps {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 // 임시 데이터 - 실제로는 API에서 가져올 예정
@@ -125,7 +125,8 @@ const getRelatedNotices = (currentId: number) => {
 }
 
 export async function generateMetadata({ params }: NoticePageProps): Promise<Metadata> {
-  const notice = getNoticeById(params.id)
+  const { id } = await params
+  const notice = getNoticeById(id)
   
   if (!notice) {
     return {
@@ -144,8 +145,9 @@ export async function generateMetadata({ params }: NoticePageProps): Promise<Met
   }
 }
 
-export default function NoticePage({ params }: NoticePageProps) {
-  const notice = getNoticeById(params.id)
+export default async function NoticePage({ params }: NoticePageProps) {
+  const { id } = await params
+  const notice = getNoticeById(id)
   
   if (!notice) {
     notFound()

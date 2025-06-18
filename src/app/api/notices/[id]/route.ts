@@ -5,13 +5,14 @@ import { verifyAuth } from '@/lib/auth'
 // GET - 특정 공지사항 조회
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const { data: notice, error } = await supabase
       .from('notices')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .eq('published', true)
       .single()
 
@@ -46,9 +47,11 @@ export async function GET(
 // PUT - 공지사항 수정 (관리자 전용)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
+    
     // 관리자 권한 확인
     const auth = await verifyAuth(request)
     if (!auth.isAdmin) {
@@ -77,7 +80,7 @@ export async function PUT(
         published,
         updated_at: new Date().toISOString()
       })
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single()
 
@@ -113,9 +116,11 @@ export async function PUT(
 // DELETE - 공지사항 삭제 (관리자 전용)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
+    
     // 관리자 권한 확인
     const auth = await verifyAuth(request)
     if (!auth.isAdmin) {
@@ -128,7 +133,7 @@ export async function DELETE(
     const { error } = await supabase
       .from('notices')
       .delete()
-      .eq('id', params.id)
+      .eq('id', id)
 
     if (error) {
       console.error('Database error:', error)

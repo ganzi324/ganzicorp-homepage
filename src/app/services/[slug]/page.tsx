@@ -222,13 +222,14 @@ const services = [
 ]
 
 interface ServiceDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
-  const service = services.find(s => s.slug === params.slug)
+export default async function ServiceDetailPage({ params }: ServiceDetailPageProps) {
+  const { slug } = await params
+  const service = services.find(s => s.slug === slug)
 
   if (!service) {
     notFound()
@@ -443,7 +444,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ServiceDetailPageProps): Promise<Metadata> {
-  const service = services.find(s => s.slug === params.slug)
+  const { slug } = await params
+  const service = services.find(s => s.slug === slug)
 
   if (!service) {
     return {

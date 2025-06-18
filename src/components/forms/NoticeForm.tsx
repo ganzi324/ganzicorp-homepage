@@ -27,8 +27,8 @@ const noticeSchema = z.object({
   title: z.string().min(1, '제목을 입력해주세요').max(200, '제목은 200자 이하로 입력해주세요'),
   content: z.string().min(1, '내용을 입력해주세요').max(10000, '내용은 10,000자 이하로 입력해주세요'),
   category: z.string().min(1, '카테고리를 선택해주세요'),
-  published: z.boolean().default(false),
-  isPinned: z.boolean().default(false)
+  published: z.boolean(),
+  isPinned: z.boolean()
 })
 
 type NoticeFormData = z.infer<typeof noticeSchema>
@@ -62,8 +62,8 @@ export default function NoticeForm({ initialData, onSubmit, isLoading = false }:
       title: initialData?.title || '',
       content: initialData?.content || '',
       category: initialData?.category || '',
-      published: initialData?.published || false,
-      isPinned: initialData?.isPinned || false
+      published: initialData?.published ?? false,
+      isPinned: initialData?.isPinned ?? false
     }
   })
 

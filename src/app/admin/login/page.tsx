@@ -11,6 +11,9 @@ import Link from "next/link"
 import { useAuth } from "@/contexts/AuthContext"
 import { useRouter } from "next/navigation"
 
+// Force dynamic rendering to avoid pre-render issues with useAuth
+export const dynamic = 'force-dynamic'
+
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

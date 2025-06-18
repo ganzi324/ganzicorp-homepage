@@ -5,9 +5,11 @@ import { verifyAuth } from '@/lib/auth'
 // GET - 관리자용 특정 공지사항 조회 (발행 상태 무관)
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
+    
     // 관리자 권한 확인
     const auth = await verifyAuth(request)
     if (!auth.isAdmin) {
@@ -19,7 +21,7 @@ export async function GET(
     const { data: notice, error } = await supabase
       .from('notices')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single()
 
     if (error) {
