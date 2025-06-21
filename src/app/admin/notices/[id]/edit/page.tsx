@@ -1,108 +1,63 @@
-import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useParams, notFound } from 'next/navigation'
 import AdminLayout from '@/components/layout/AdminLayout'
-import NoticeForm from '@/components/forms/NoticeForm'
+import NoticeForm, { NoticeFormData } from '@/components/forms/NoticeForm'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
-interface NoticeFormData {
+interface Notice {
+  id: string
   title: string
   content: string
-  category: string
-  published: boolean
-  isPinned: boolean
+  is_published: boolean
 }
 
-interface EditNoticePageProps {
-  params: Promise<{ id: string }>
-}
+export default function EditNoticePage() {
+  const params = useParams()
+  const [notice, setNotice] = useState<Notice | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
-// 임시 데이터 - 실제로는 API에서 가져올 예정
-const getNoticeById = async (id: string) => {
-  const notices = [
-    {
-      id: 1,
-      title: 'GanziCorp 공식 홈페이지 오픈',
-      content: `안녕하세요. GanziCorp의 공식 홈페이지가 새롭게 오픈되었습니다.
-
-저희 GanziCorp은 혁신적인 기술 솔루션을 제공하는 전문 기업으로, 고객의 성공을 위해 최선을 다하고 있습니다.
-
-## 주요 특징
-
-### 1. 최신 기술 스택
-- Next.js 15 기반의 현대적인 웹 애플리케이션
-- TypeScript로 작성된 안전하고 확장 가능한 코드
-- Tailwind CSS와 Shadcn UI를 활용한 세련된 디자인
-
-### 2. 사용자 중심 설계
-- 직관적이고 사용하기 쉬운 인터페이스
-- 반응형 디자인으로 모든 디바이스에서 최적화
-- 빠른 로딩 속도와 우수한 성능
-
-### 3. 포괄적인 서비스 정보
-- 회사 소개 및 비전
-- 제공 서비스 상세 정보
-- 연락처 및 문의 방법
-
-앞으로도 지속적인 업데이트와 개선을 통해 더 나은 서비스를 제공하겠습니다.
-
-감사합니다.`,
-      category: '공지',
-      published: true,
-      isPinned: true,
-      author: '관리자',
-      createdAt: '2024-01-15T10:30:00Z'
-    },
-    {
-      id: 2,
-      title: '새로운 AI 솔루션 서비스 출시',
-      content: '최신 AI 기술을 활용한 맞춤형 솔루션 서비스를 출시했습니다.',
-      category: '서비스',
-      published: true,
-      isPinned: false,
-      author: '개발팀',
-      createdAt: '2024-01-10T14:20:00Z'
+  useEffect(() => {
+    const fetchNotice = async () => {
+      try {
+        const response = await fetch(`/api/admin/notices/${params.id}`)
+        if (!response.ok) {
+          throw new Error('공지사항을 불러올 수 없습니다')
+        }
+        const data = await response.json()
+        if (data.success) {
+          setNotice(data.data)
+        } else {
+          throw new Error(data.error || '공지사항을 불러올 수 없습니다')
+        }
+      } catch (error) {
+        console.error('Error fetching notice:', error)
+        notFound()
+      } finally {
+        setLoading(false)
+      }
     }
-  ]
-  
-  return notices.find(notice => notice.id === parseInt(id))
-}
 
-export async function generateMetadata({ params }: EditNoticePageProps): Promise<Metadata> {
-  const resolvedParams = await params
-  const notice = await getNoticeById(resolvedParams.id)
-  
-  if (!notice) {
-    return {
-      title: '공지사항을 찾을 수 없음 | 관리자',
+    if (params.id) {
+      fetchNotice()
     }
-  }
-
-  return {
-    title: `${notice.title} 편집 | 관리자`,
-    description: `${notice.title} 공지사항을 편집합니다`,
-  }
-}
-
-export default async function EditNoticePage({ params }: EditNoticePageProps) {
-  const resolvedParams = await params
-  const notice = await getNoticeById(resolvedParams.id)
-
-  if (!notice) {
-    notFound()
-  }
+  }, [params.id])
 
   const handleSubmit = async (data: NoticeFormData, action: 'draft' | 'publish') => {
     try {
-      const response = await fetch(`/api/notices/${resolvedParams.id}`, {
-        method: 'PUT',
+      setIsLoading(true)
+      const response = await fetch(`/api/admin/notices/${params.id}`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ...data,
-          published: action === 'publish'
+          is_published: action === 'publish'
         }),
       })
 
@@ -114,15 +69,30 @@ export default async function EditNoticePage({ params }: EditNoticePageProps) {
       const result = await response.json()
       
       // 성공 시 목록 페이지로 리다이렉트
-      if (action === 'publish') {
-        window.location.href = '/admin/notices'
-      }
+      window.location.href = '/admin/notices'
       
       return result
     } catch (error) {
       console.error('Notice update error:', error)
       throw error
+    } finally {
+      setIsLoading(false)
     }
+  }
+
+  if (loading) {
+    return (
+      <AdminLayout>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <span className="ml-2">공지사항을 불러오는 중...</span>
+        </div>
+      </AdminLayout>
+    )
+  }
+
+  if (!notice) {
+    notFound()
   }
 
   return (
@@ -145,14 +115,12 @@ export default async function EditNoticePage({ params }: EditNoticePageProps) {
         {/* 폼 */}
         <NoticeForm 
           initialData={{
-            id: notice.id,
             title: notice.title,
             content: notice.content,
-            category: notice.category,
-            published: notice.published,
-            isPinned: notice.isPinned
+            published: notice.is_published
           }}
-          onSubmit={handleSubmit} 
+          onSubmit={handleSubmit}
+          isLoading={isLoading}
         />
       </div>
     </AdminLayout>

@@ -1,34 +1,26 @@
-import { Metadata } from 'next'
+'use client'
+
 import AdminLayout from '@/components/layout/AdminLayout'
-import NoticeForm from '@/components/forms/NoticeForm'
+import NoticeForm, { NoticeFormData } from '@/components/forms/NoticeForm'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
-
-interface NoticeFormData {
-  title: string
-  content: string
-  category: string
-  published: boolean
-  isPinned: boolean
-}
-
-export const metadata: Metadata = {
-  title: '새 공지사항 작성 | 관리자',
-  description: '새로운 공지사항을 작성합니다',
-}
+import { useState } from 'react'
 
 export default function NewNoticePage() {
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleSubmit = async (data: NoticeFormData, action: 'draft' | 'publish') => {
     try {
-      const response = await fetch('/api/notices', {
+      setIsLoading(true)
+      const response = await fetch('/api/admin/notices', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ...data,
-          published: action === 'publish'
+          is_published: action === 'publish'
         }),
       })
 
@@ -40,14 +32,14 @@ export default function NewNoticePage() {
       const result = await response.json()
       
       // 성공 시 목록 페이지로 리다이렉트
-      if (action === 'publish') {
-        window.location.href = '/admin/notices'
-      }
+      window.location.href = '/admin/notices'
       
       return result
     } catch (error) {
       console.error('Notice creation error:', error)
       throw error
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -69,7 +61,7 @@ export default function NewNoticePage() {
         </div>
 
         {/* 폼 */}
-        <NoticeForm onSubmit={handleSubmit} />
+        <NoticeForm onSubmit={handleSubmit} isLoading={isLoading} />
       </div>
     </AdminLayout>
   )
