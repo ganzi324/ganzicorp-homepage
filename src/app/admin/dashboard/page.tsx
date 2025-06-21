@@ -21,7 +21,7 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push('/admin/login')
+      router.push('/auth/login')
     }
   }, [user, loading, router])
 
