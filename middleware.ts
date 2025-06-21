@@ -4,18 +4,13 @@ import type { NextRequest } from 'next/server'
 export async function middleware(req: NextRequest) {
   // Protected admin routes
   if (req.nextUrl.pathname.startsWith('/admin')) {
-    // Allow access to login page even without authentication
-    if (req.nextUrl.pathname === '/admin/login') {
-      return NextResponse.next()
-    }
-
-    // For all other admin routes, check for session token in cookies
+    // For all admin routes, check for session token in cookies
     const sessionToken = req.cookies.get('sb-access-token') || 
                         req.cookies.get('supabase-auth-token') ||
                         req.cookies.get('sb-dsgclqtuwhcanznygeqh-auth-token')
 
     if (!sessionToken) {
-      return NextResponse.redirect(new URL('/admin/login', req.url))
+      return NextResponse.redirect(new URL('/auth/login', req.url))
     }
   }
 
