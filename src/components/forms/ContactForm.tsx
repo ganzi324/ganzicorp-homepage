@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -17,18 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Send, Loader2 } from 'lucide-react'
-
-// Form 스키마 정의
-const contactFormSchema = z.object({
-  name: z.string().min(2, '이름은 최소 2글자 이상이어야 합니다'),
-  email: z.string().email('올바른 이메일 형식을 입력해주세요'),
-  company: z.string().optional(),
-  phone: z.string().optional(),
-  subject: z.string().min(1, '문의 유형을 선택해주세요'),
-  message: z.string().min(10, '메시지는 최소 10글자 이상 작성해주세요'),
-})
-
-type ContactFormData = z.infer<typeof contactFormSchema>
+import { contactFormSchema, ContactFormData } from '@/lib/schemas'
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)

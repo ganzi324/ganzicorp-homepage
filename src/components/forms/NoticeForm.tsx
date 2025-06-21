@@ -3,16 +3,15 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { 
   Save, 
   Eye, 
@@ -21,17 +20,7 @@ import {
   CheckCircle,
   Loader2
 } from 'lucide-react'
-
-// 폼 validation 스키마
-const noticeSchema = z.object({
-  title: z.string().min(1, '제목을 입력해주세요').max(200, '제목은 200자 이하로 입력해주세요'),
-  content: z.string().min(1, '내용을 입력해주세요').max(10000, '내용은 10,000자 이하로 입력해주세요'),
-  category: z.string().min(1, '카테고리를 선택해주세요'),
-  published: z.boolean(),
-  isPinned: z.boolean()
-})
-
-type NoticeFormData = z.infer<typeof noticeSchema>
+import { noticeFormSchema, NoticeFormData } from '@/lib/schemas'
 
 interface NoticeFormProps {
   initialData?: Partial<NoticeFormData> & { id?: number }
@@ -39,16 +28,10 @@ interface NoticeFormProps {
   isLoading?: boolean
 }
 
-const categories = [
-  { value: '공지', label: '공지' },
-  { value: '서비스', label: '서비스' },
-  { value: '이벤트', label: '이벤트' },
-  { value: '기술', label: '기술' }
-]
-
 export default function NoticeForm({ initialData, onSubmit, isLoading = false }: NoticeFormProps) {
   const [submitAction, setSubmitAction] = useState<'draft' | 'publish' | null>(null)
   const [alert, setAlert] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
 
   const {
     register,
@@ -57,13 +40,11 @@ export default function NoticeForm({ initialData, onSubmit, isLoading = false }:
     setValue,
     formState: { errors, isDirty }
   } = useForm<NoticeFormData>({
-    resolver: zodResolver(noticeSchema),
+    resolver: zodResolver(noticeFormSchema),
     defaultValues: {
       title: initialData?.title || '',
       content: initialData?.content || '',
-      category: initialData?.category || '',
-      published: initialData?.published ?? false,
-      isPinned: initialData?.isPinned ?? false
+      published: initialData?.published ?? false
     }
   })
 
@@ -75,7 +56,14 @@ export default function NoticeForm({ initialData, onSubmit, isLoading = false }:
 
     try {
       setAlert(null)
-      await onSubmit(data, submitAction)
+      
+      // 발행 상태에 따라 published 값 설정
+      const finalData = {
+        ...data,
+        published: submitAction === 'publish'
+      }
+      
+      await onSubmit(finalData, submitAction)
       setAlert({
         type: 'success',
         message: submitAction === 'draft' 
@@ -94,12 +82,18 @@ export default function NoticeForm({ initialData, onSubmit, isLoading = false }:
 
   const handleSaveDraft = () => {
     setSubmitAction('draft')
+    setValue('published', false, { shouldDirty: true })
     handleSubmit(handleFormSubmit)()
   }
 
   const handlePublish = () => {
     setSubmitAction('publish')
+    setValue('published', true, { shouldDirty: true })
     handleSubmit(handleFormSubmit)()
+  }
+
+  const handlePreview = () => {
+    setIsPreviewOpen(true)
   }
 
   const getCharacterCount = (text: string, max: number) => {
@@ -110,6 +104,18 @@ export default function NoticeForm({ initialData, onSubmit, isLoading = false }:
         {count}/{max}
       </span>
     )
+  }
+
+  // 마크다운 간단 렌더링 함수
+  const renderMarkdown = (content: string) => {
+    return content
+      .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold mb-2 mt-4">$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2 class="text-xl font-semibold mb-3 mt-4">$1</h2>')
+      .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mb-4 mt-4">$1</h1>')
+      .replace(/^\- (.*$)/gim, '<li class="ml-4">• $1</li>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/\n/g, '<br />')
   }
 
   return (
@@ -154,28 +160,6 @@ export default function NoticeForm({ initialData, onSubmit, isLoading = false }:
                       {getCharacterCount(watchedValues.title || '', 200)}
                     </div>
                   </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="category">카테고리 *</Label>
-                  <Select
-                    value={watchedValues.category}
-                    onValueChange={(value) => setValue('category', value, { shouldDirty: true })}
-                  >
-                    <SelectTrigger className={errors.category ? 'border-red-500' : ''}>
-                      <SelectValue placeholder="카테고리를 선택하세요" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category.value} value={category.value}>
-                          {category.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {errors.category && (
-                    <p className="text-sm text-red-600 mt-1">{errors.category.message}</p>
-                  )}
                 </div>
               </CardContent>
             </Card>
@@ -230,21 +214,18 @@ export default function NoticeForm({ initialData, onSubmit, isLoading = false }:
                   </Label>
                 </div>
 
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="isPinned"
-                    checked={watchedValues.isPinned}
-                    onCheckedChange={(checked) => setValue('isPinned', checked as boolean, { shouldDirty: true })}
-                  />
-                  <Label htmlFor="isPinned" className="text-sm font-medium">
-                    상단 고정
-                  </Label>
-                </div>
-
                 <div className="pt-2">
                   <Badge variant={watchedValues.published ? 'default' : 'secondary'}>
                     {watchedValues.published ? '발행됨' : '임시저장'}
                   </Badge>
+                </div>
+
+                <div className="text-sm text-gray-600">
+                  <p>
+                    {watchedValues.published 
+                      ? '이 공지사항은 즉시 발행되어 모든 사용자가 볼 수 있습니다.'
+                      : '이 공지사항은 임시저장되어 관리자만 볼 수 있습니다.'}
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -261,20 +242,48 @@ export default function NoticeForm({ initialData, onSubmit, isLoading = false }:
                     <p className="mt-1 line-clamp-2">{watchedValues.title || '제목 없음'}</p>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-600">카테고리:</span>
-                    <p className="mt-1">{watchedValues.category || '선택 안됨'}</p>
-                  </div>
-                  <div>
                     <span className="font-medium text-gray-600">내용:</span>
                     <p className="mt-1 line-clamp-3 text-gray-600">
                       {watchedValues.content || '내용 없음'}
                     </p>
                   </div>
                 </div>
-                <Button variant="outline" size="sm" className="w-full mt-4">
-                  <Eye className="h-4 w-4 mr-2" />
-                  전체 미리보기
-                </Button>
+                <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" size="sm" className="w-full mt-4" onClick={handlePreview}>
+                      <Eye className="h-4 w-4 mr-2" />
+                      전체 미리보기
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle>공지사항 미리보기</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div>
+                        <h1 className="text-2xl font-bold text-gray-900 mb-4">
+                          {watchedValues.title || '제목 없음'}
+                        </h1>
+                        <div className="flex items-center gap-2 mb-6">
+                          <Badge variant={watchedValues.published ? 'default' : 'secondary'}>
+                            {watchedValues.published ? '발행됨' : '임시저장'}
+                          </Badge>
+                          <span className="text-sm text-gray-500">
+                            {new Date().toLocaleDateString('ko-KR')}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="prose max-w-none">
+                        <div 
+                          className="text-gray-700 leading-relaxed"
+                          dangerouslySetInnerHTML={{ 
+                            __html: renderMarkdown(watchedValues.content || '내용 없음') 
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </CardContent>
             </Card>
 
