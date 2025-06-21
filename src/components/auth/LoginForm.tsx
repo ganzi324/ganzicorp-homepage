@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -12,13 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { useAuth } from './AuthProvider'
 import { Eye, EyeOff, LogIn, Loader2 } from 'lucide-react'
 import Link from 'next/link'
-
-const loginSchema = z.object({
-  email: z.string().email('유효한 이메일 주소를 입력해주세요'),
-  password: z.string().min(6, '비밀번호는 최소 6자 이상이어야 합니다'),
-})
-
-type LoginFormData = z.infer<typeof loginSchema>
+import { loginSchema, LoginFormData } from '@/lib/schemas'
 
 interface LoginFormProps {
   onSuccess?: () => void

@@ -1,19 +1,18 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import { User, Session } from '@supabase/supabase-js'
+import { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 
 interface AuthContextType {
   user: User | null
-  session: Session | null
   loading: boolean
   signIn: (email: string, password: string) => Promise<{ error?: string }>
-  signUp: (email: string, password: string, fullName?: string) => Promise<{ error?: string }>
   signOut: () => Promise<void>
   isAdmin: boolean
   userProfile: UserProfile | null
+  profileLoading: boolean
 }
 
 interface UserProfile {
@@ -29,54 +28,17 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [session, setSession] = useState<Session | null>(null)
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [profileLoading, setProfileLoading] = useState(false)
   const router = useRouter()
 
   const isAdmin = userProfile?.role === 'admin' || userProfile?.role === 'super_admin'
 
-  useEffect(() => {
-    // 초기 세션 확인
-    const getInitialSession = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession()
-        setSession(session)
-        setUser(session?.user ?? null)
-        
-        if (session?.user) {
-          await fetchUserProfile(session.user.id)
-        }
-      } catch (error) {
-        console.error('Error getting initial session:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    getInitialSession()
-
-    // 인증 상태 변경 리스너
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session)
-        setUser(session?.user ?? null)
-        
-        if (session?.user) {
-          await fetchUserProfile(session.user.id)
-        } else {
-          setUserProfile(null)
-        }
-        
-        setLoading(false)
-      }
-    )
-
-    return () => subscription.unsubscribe()
-  }, [])
-
+  // 사용자 프로필 조회 함수
   const fetchUserProfile = async (userId: string) => {
     try {
+      setProfileLoading(true)
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -85,73 +47,95 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) {
         console.error('Error fetching user profile:', error)
-        return
+        setUserProfile(null)
+        return null
       }
-
+      
       setUserProfile(data)
+      return data
     } catch (error) {
-      console.error('Error fetching user profile:', error)
+      console.error('Exception in fetchUserProfile:', error)
+      setUserProfile(null)
+      return null
+    } finally {
+      setProfileLoading(false)
     }
   }
 
+  useEffect(() => {
+    // 최초 세션 확인
+    supabase.auth.getSession().then(({ data }) => {
+      const session = data.session
+      setUser(session?.user ?? null)
+      
+      if (session?.user) {
+        fetchUserProfile(session.user.id)
+      } else {
+        setUserProfile(null)
+      }
+      
+      setLoading(false)
+    })
+
+    // 세션 변경 감지
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+      
+      if (session?.user) {
+        fetchUserProfile(session.user.id)
+      } else {
+        setUserProfile(null)
+        setProfileLoading(false)
+      }
+    })
+
+    return () => {
+      listener.subscription.unsubscribe()
+    }
+  }, [])
+
   const signIn = async (email: string, password: string) => {
     try {
+      setLoading(true)
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
       if (error) {
+        setLoading(false)
         return { error: error.message }
       }
 
       return {}
     } catch {
+      setLoading(false)
       return { error: '로그인 중 오류가 발생했습니다.' }
-    }
-  }
-
-  const signUp = async (email: string, password: string, fullName?: string) => {
-    try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: fullName || email,
-          },
-        },
-      })
-
-      if (error) {
-        return { error: error.message }
-      }
-
-      return {}
-    } catch {
-      return { error: '회원가입 중 오류가 발생했습니다.' }
     }
   }
 
   const signOut = async () => {
     try {
+      setLoading(true)
       await supabase.auth.signOut()
       setUserProfile(null)
+      setProfileLoading(false)
+      setLoading(false)
       router.push('/')
     } catch (error) {
       console.error('Error signing out:', error)
+      setLoading(false)
     }
   }
 
   const value = {
     user,
-    session,
     loading,
     signIn,
-    signUp,
     signOut,
     isAdmin,
     userProfile,
+    profileLoading,
   }
 
   return (
