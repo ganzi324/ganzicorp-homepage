@@ -121,19 +121,29 @@ const StatusFilter = memo(({ selectedStatus, onStatusChange, totalCount }: {
 StatusFilter.displayName = 'StatusFilter'
 
 export default function AdminInquiriesPage() {
-  const { user, isAdmin } = useAuth()
+  const { user, isAdmin, loading } = useAuth()
   const router = useRouter()
-  const { inquiries, loading, error, connectionStatus } = useRealtimeInquiries()
-
-  // 권한 체크
-  useEffect(() => {
-    if (!user || !isAdmin) {
-      router.push('/admin/login')
-    }
-  }, [user, isAdmin, router])
-
+  
   // Memoized status filter state
   const [selectedStatus, setSelectedStatus] = useState('all')
+  
+  // 권한 체크 - 로딩이 완료된 후에만 체크
+  const isAuthorized = useMemo(() => {
+    if (loading) return null // 로딩 중
+    return user && isAdmin // 권한 있음/없음
+  }, [user, isAdmin, loading])
+
+  // 권한이 없을 때만 리다이렉트 (한 번만 실행)
+  useEffect(() => {
+    if (isAuthorized === false) {
+      router.push('/auth/login')
+    }
+  }, [isAuthorized, router])
+
+  // 권한이 확인된 후에만 Realtime 훅 사용
+  const { inquiries, loading: inquiriesLoading, error, connectionStatus } = useRealtimeInquiries({
+    enabled: isAuthorized === true
+  })
 
   // Memoized filtered inquiries for performance
   const filteredInquiries = useMemo(() => {
@@ -157,13 +167,42 @@ export default function AdminInquiriesPage() {
   }, [])
 
   const handleViewDetails = useCallback((id: string) => {
+    console.log('Navigating to inquiry detail:', id)
+    
+    // ID 유효성 검사
+    if (!id || typeof id !== 'string') {
+      alert('잘못된 문의 ID입니다.')
+      return
+    }
+    
+    // 해당 ID의 문의가 실제로 목록에 있는지 확인
+    const inquiryExists = inquiries.find(inquiry => inquiry.id === id)
+    if (!inquiryExists) {
+      alert('해당 문의를 찾을 수 없습니다. 목록을 새로고침해주세요.')
+      return
+    }
+    
     router.push(`/admin/inquiries/${id}`)
-  }, [router])
+  }, [router, inquiries])
 
-  if (!user || !isAdmin) {
+  // 로딩 중이거나 권한 확인 중
+  if (loading || isAuthorized === null) {
+    return (
+      <AdminLayout>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <span className="ml-2">권한을 확인하는 중...</span>
+        </div>
+      </AdminLayout>
+    )
+  }
+
+  // 권한이 없음 (리다이렉트 처리 중)
+  if (isAuthorized === false) {
     return null
   }
 
+  // 권한이 있음 - 정상 렌더링
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -222,7 +261,7 @@ export default function AdminInquiriesPage() {
 
         {/* 문의 목록 */}
         <div className="space-y-4">
-          {loading ? (
+          {inquiriesLoading ? (
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
