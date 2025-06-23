@@ -8,19 +8,17 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    // 개발 환경에서는 인증 우회 (실제 운영 환경에서는 제거 필요)
-    if (process.env.NODE_ENV === 'production') {
-      const auth = await verifyAuth(request)
-      if (!auth.isAdmin) {
-        return NextResponse.json(
-          { success: false, error: '관리자 권한이 필요합니다.' },
-          { status: 403 }
-        )
-      }
-    }
-
     const { id } = await params
     
+    // 관리자 권한 확인
+    const auth = await verifyAuth(request)
+    if (!auth.isAdmin) {
+      return NextResponse.json(
+        { success: false, error: '관리자 권한이 필요합니다.' },
+        { status: 403 }
+      )
+    }
+
     const { data, error } = await supabase
       .from('notices')
       .select('*')
@@ -61,20 +59,18 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    // 개발 환경에서는 인증 우회 (실제 운영 환경에서는 제거 필요)
-    if (process.env.NODE_ENV === 'production') {
-      const auth = await verifyAuth(request)
-      if (!auth.isAdmin) {
-        return NextResponse.json(
-          { success: false, error: '관리자 권한이 필요합니다.' },
-          { status: 403 }
-        )
-      }
-    }
-
     const { id } = await params
     const body = await request.json()
     const { title, content, is_published } = body
+
+    // 관리자 권한 확인
+    const auth = await verifyAuth(request)
+    if (!auth.isAdmin) {
+      return NextResponse.json(
+        { success: false, error: '관리자 권한이 필요합니다.' },
+        { status: 403 }
+      )
+    }
 
     // 필수 필드 검증
     if (!title || !content) {
@@ -133,18 +129,16 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    // 개발 환경에서는 인증 우회 (실제 운영 환경에서는 제거 필요)
-    if (process.env.NODE_ENV === 'production') {
-      const auth = await verifyAuth(request)
-      if (!auth.isAdmin) {
-        return NextResponse.json(
-          { success: false, error: '관리자 권한이 필요합니다.' },
-          { status: 403 }
-        )
-      }
-    }
-
     const { id } = await params
+    
+    // 관리자 권한 확인
+    const auth = await verifyAuth(request)
+    if (!auth.isAdmin) {
+      return NextResponse.json(
+        { success: false, error: '관리자 권한이 필요합니다.' },
+        { status: 403 }
+      )
+    }
 
     const { error } = await supabase
       .from('notices')

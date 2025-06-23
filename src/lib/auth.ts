@@ -159,9 +159,57 @@ export async function verifyAuth(request: Request): Promise<{
   isSuperAdmin: boolean
 }> {
   try {
-    // Authorization 헤더에서 토큰 추출
+    let token: string | null = null
+
+    // 1. Authorization 헤더에서 Bearer 토큰 확인 (기존 방식 유지)
     const authHeader = request.headers.get('Authorization')
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1]
+    }
+
+    // 2. 쿠키에서 세션 토큰 확인 (새로운 방식)
+    if (!token) {
+      const cookieHeader = request.headers.get('cookie')
+      if (cookieHeader) {
+        // Supabase가 사용하는 쿠키 이름들을 확인
+        const cookies = cookieHeader.split(';').reduce((acc, cookie) => {
+          const [key, value] = cookie.trim().split('=')
+          if (key && value) acc[key] = decodeURIComponent(value)
+          return acc
+        }, {} as Record<string, string>)
+
+        // Supabase의 접근 토큰 쿠키들을 순서대로 확인
+        const tokenKeys = [
+          'sb-access-token',
+          'supabase-auth-token', 
+          'sb-auth-token',
+          `sb-${process.env.NEXT_PUBLIC_SUPABASE_URL?.split('//')[1]?.split('.')[0] || 'supabase'}-auth-token`
+        ]
+
+        for (const key of tokenKeys) {
+          if (cookies[key]) {
+            try {
+              // 쿠키 값이 JSON 형태일 수 있으므로 파싱 시도
+              const cookieValue = cookies[key]
+              if (cookieValue.startsWith('{')) {
+                const parsed = JSON.parse(cookieValue)
+                token = parsed.access_token || parsed.token
+              } else {
+                token = cookieValue
+              }
+              if (token) break
+            } catch {
+              // JSON 파싱 실패 시 원본 값 사용
+              token = cookies[key]
+              if (token) break
+            }
+          }
+        }
+      }
+    }
+
+    // 토큰이 없으면 인증 실패
+    if (!token) {
       return {
         user: null,
         profile: null,
@@ -171,7 +219,6 @@ export async function verifyAuth(request: Request): Promise<{
       }
     }
 
-    const token = authHeader.split(' ')[1]
     const { data: { user }, error } = await supabase.auth.getUser(token)
 
     if (error || !user) {

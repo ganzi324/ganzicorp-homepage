@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { useAuth } from '@/components/auth/AuthProvider'
+import { useOptionalAuth } from '@/components/auth/AuthProvider'
 import { supabase } from '@/lib/supabase'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
@@ -44,7 +44,7 @@ export default function NoticeDetailClient({ noticeId, fallbackNotice }: NoticeD
   
   const searchParams = useSearchParams()
   const isPreview = searchParams.get('preview') === 'true'
-  const { isAdmin, loading: authLoading, profileLoading } = useAuth()
+  const { isAdmin, loading: authLoading, profileLoading } = useOptionalAuth()
 
 
 

@@ -151,4 +151,24 @@ export function useAuth() {
     throw new Error('useAuth must be used within an AuthProvider')
   }
   return context
+}
+
+// AuthProvider가 없어도 사용할 수 있는 안전한 훅
+export function useOptionalAuth() {
+  const context = useContext(AuthContext)
+  
+  // AuthProvider가 없으면 기본값 반환
+  if (context === undefined) {
+    return {
+      user: null,
+      loading: false,
+      signIn: async () => ({ error: '인증이 설정되지 않았습니다.' }),
+      signOut: async () => {},
+      isAdmin: false,
+      userProfile: null,
+      profileLoading: false,
+    }
+  }
+  
+  return context
 } 

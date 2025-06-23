@@ -5,16 +5,15 @@ import { verifyAuth } from '@/lib/auth'
 // GET - 관리자용 공지사항 목록 조회 (모든 상태 포함)
 export async function GET(request: NextRequest) {
   try {
-    // 개발 환경에서는 인증 우회 (실제 운영 환경에서는 제거 필요)
-    if (process.env.NODE_ENV === 'production') {
-      const auth = await verifyAuth(request)
-      if (!auth.isAdmin) {
-        return NextResponse.json(
-          { success: false, error: '관리자 권한이 필요합니다.' },
-          { status: 403 }
-        )
-      }
+    // 관리자 권한 확인
+    const auth = await verifyAuth(request)
+    if (!auth.isAdmin) {
+      return NextResponse.json(
+        { success: false, error: '관리자 권한이 필요합니다.' },
+        { status: 403 }
+      )
     }
+
     const { searchParams } = new URL(request.url)
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '10')
@@ -77,15 +76,13 @@ export async function GET(request: NextRequest) {
 // POST - 새 공지사항 작성
 export async function POST(request: NextRequest) {
   try {
-    // 개발 환경에서는 인증 우회 (실제 운영 환경에서는 제거 필요)
-    if (process.env.NODE_ENV === 'production') {
-      const auth = await verifyAuth(request)
-      if (!auth.isAdmin) {
-        return NextResponse.json(
-          { success: false, error: '관리자 권한이 필요합니다.' },
-          { status: 403 }
-        )
-      }
+    // 관리자 권한 확인
+    const auth = await verifyAuth(request)
+    if (!auth.isAdmin) {
+      return NextResponse.json(
+        { success: false, error: '관리자 권한이 필요합니다.' },
+        { status: 403 }
+      )
     }
 
     const body = await request.json()

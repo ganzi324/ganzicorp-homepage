@@ -2,7 +2,6 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { Metadata } from 'next';
 import React from 'react';
-import { AuthProvider } from '@/components/auth/AuthProvider';
 import { Toaster } from '@/components/ui/toaster';
 import StructuredData from '@/components/seo/StructuredData';
 
@@ -83,10 +82,8 @@ export default function RootLayout({
             }
           }}
         />
-        <AuthProvider>
-          <div id="root">{children}</div>
-          <Toaster />
-        </AuthProvider>
+        <div id="root">{children}</div>
+        <Toaster />
       </body>
     </html>
   );
