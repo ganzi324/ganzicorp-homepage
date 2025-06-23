@@ -1,7 +1,8 @@
 'use client'
 
 import AdminLayout from '@/components/layout/AdminLayout'
-import NoticeForm, { NoticeFormData } from '@/components/forms/NoticeForm'
+import NoticeForm from '@/components/forms/NoticeForm'
+import { NoticeFormData } from '@/lib/schemas'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'

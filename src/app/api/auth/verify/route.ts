@@ -39,11 +39,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       valid: true,
-      user: {
-        id: user.id,
-        email: user.email,
-        ...user
-      },
+      user: user,
       profile: profileError ? null : profile
     })
 
