@@ -48,12 +48,5 @@
         }
       ]
     }
-  ],
-  "redirects": [
-    {
-      "source": "/admin",
-      "destination": "/auth/login",
-      "permanent": false
-    }
   ]
 } 
