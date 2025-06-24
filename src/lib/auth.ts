@@ -1,5 +1,7 @@
 import { supabase } from './supabase'
 import type { User } from '@supabase/supabase-js'
+import { createClient } from '@/utils/supabase/server'
+import { Profile } from '@/lib/supabase'
 
 export type UserRole = 'user' | 'admin' | 'super_admin'
 
@@ -150,66 +152,64 @@ export function onAuthStateChange(callback: (user: User | null) => void) {
   })
 }
 
-// 서버 측에서 사용자 인증 확인 (API 라우트용)
-export async function verifyAuth(request: Request): Promise<{
+// 서버 측에서 사용자 인증 확인 (API 라우트용) - Supabase 권장 방식
+export async function verifyAuth(_request: Request): Promise<{
   user: User | null
-  profile: UserProfile | null
+  profile: Profile | null
   isAuthenticated: boolean
   isAdmin: boolean
   isSuperAdmin: boolean
 }> {
   try {
-    // Authorization 헤더에서 토큰 추출
-    const authHeader = request.headers.get('Authorization')
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    // Supabase 권장 방식으로 서버 클라이언트 생성
+    const supabase = await createClient()
+    
+    // 사용자 인증 확인 (쿠키에서 자동으로 세션 추출)
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    
+    if (authError || !user) {
       return {
         user: null,
         profile: null,
         isAuthenticated: false,
         isAdmin: false,
-        isSuperAdmin: false
+        isSuperAdmin: false,
       }
     }
 
-    const token = authHeader.split(' ')[1]
-    const { data: { user }, error } = await supabase.auth.getUser(token)
-
-    if (error || !user) {
-      return {
-        user: null,
-        profile: null,
-        isAuthenticated: false,
-        isAdmin: false,
-        isSuperAdmin: false
-      }
-    }
-
-    // 사용자 프로필 가져오기
-    const { data: profile } = await supabase
+    // 사용자 프로필 조회
+    const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('*')
       .eq('id', user.id)
       .single()
 
-    const userRole = profile?.role || 'user'
-    const isAdminUser = userRole === 'admin' || userRole === 'super_admin'
-    const isSuperAdminUser = userRole === 'super_admin'
+    if (profileError) {
+      console.error('프로필 조회 실패:', profileError)
+      return {
+        user,
+        profile: null,
+        isAuthenticated: true,
+        isAdmin: false,
+        isSuperAdmin: false,
+      }
+    }
 
     return {
       user,
       profile,
       isAuthenticated: true,
-      isAdmin: isAdminUser,
-      isSuperAdmin: isSuperAdminUser
+      isAdmin: profile.role === 'admin' || profile.role === 'super_admin',
+      isSuperAdmin: profile.role === 'super_admin',
     }
   } catch (error) {
-    console.error('Error verifying auth:', error)
+    console.error('verifyAuth 오류:', error)
     return {
       user: null,
       profile: null,
       isAuthenticated: false,
       isAdmin: false,
-      isSuperAdmin: false
+      isSuperAdmin: false,
     }
   }
 } 

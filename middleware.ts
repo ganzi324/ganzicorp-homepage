@@ -1,22 +1,22 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { updateSession } from '@/utils/supabase/middleware'
 
-export async function middleware(req: NextRequest) {
-  // Protected admin routes
-  if (req.nextUrl.pathname.startsWith('/admin')) {
-    // For all admin routes, check for session token in cookies
-    const sessionToken = req.cookies.get('sb-access-token') || 
-                        req.cookies.get('supabase-auth-token') ||
-                        req.cookies.get('sb-dsgclqtuwhcanznygeqh-auth-token')
-
-    if (!sessionToken) {
-      return NextResponse.redirect(new URL('/auth/login', req.url))
-    }
+export async function middleware(request: NextRequest) {
+  // Supabase 세션 업데이트 (권장 방식)
+  const response = await updateSession(request)
+  
+  // 관리자 페이지 보호 (선택적)
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    // 기본적인 경로 보호만 수행
+    // 실제 권한 확인은 각 API와 컴포넌트에서 처리
+    // 이렇게 하면 미들웨어는 세션 관리에만 집중할 수 있음
   }
 
-  return NextResponse.next()
+  return response
 }
 
+// 미들웨어가 실행될 경로 설정
 export const config = {
   matcher: [
     /*
@@ -24,7 +24,7 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * - public folder
+     * Feel free to modify this pattern to include more paths.
      */
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],

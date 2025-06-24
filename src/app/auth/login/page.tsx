@@ -4,7 +4,7 @@ import LoginForm from "@/components/auth/LoginForm"
 
 export const metadata: Metadata = {
   title: "로그인 | GanziCorp",
-  description: "GanziCorp 계정으로 로그인하세요.",
+  description: "관리자 로그인 페이지",
 }
 
 export default function LoginPage() {
@@ -12,7 +12,7 @@ export default function LoginPage() {
     <MainLayout>
       <section className="py-20 px-4 min-h-screen flex items-center justify-center">
         <div className="w-full max-w-md">
-          <LoginForm redirectTo="/admin" />
+          <LoginForm />
         </div>
       </section>
     </MainLayout>

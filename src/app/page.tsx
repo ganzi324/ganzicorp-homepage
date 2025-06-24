@@ -33,12 +33,16 @@ export default function HomePage() {
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/services">
-              <Button size="lg" className="bg-white text-ganzicorp-primary hover:bg-ganzicorp-light font-semibold hover-lift">
+              <Button size="lg" className="bg-white text-ganzicorp-primary hover:bg-ganzicorp-light font-semibold hover-lift z-10 relative shadow-lg">
                 서비스 살펴보기
               </Button>
             </Link>
             <Link href="/contact">
-              <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-ganzicorp-primary font-semibold">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-2 border-white text-white hover:bg-white hover:text-ganzicorp-primary font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 z-10 relative bg-white/20 backdrop-blur-sm"
+              >
                 문의하기
               </Button>
             </Link>
@@ -225,7 +229,7 @@ export default function HomePage() {
               </Button>
             </Link>
             <Link href="/about">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+              <Button size="lg" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-semibold shadow-lg hover:shadow-xl transition-all duration-300 z-10 relative">
                 더 알아보기
               </Button>
             </Link>

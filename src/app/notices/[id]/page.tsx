@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import MainLayout from '@/components/layout/MainLayout'
 import NoticeDetailClient from '@/components/notices/NoticeDetailClient'
+import { AuthProvider } from '@/components/auth/AuthProvider'
 
 interface NoticePageProps {
   params: Promise<{ id: string }>
@@ -48,6 +49,20 @@ const getNoticeById = async (id: string, isPreview: boolean = false) => {
     console.error('Error fetching notice:', error)
     return null
   }
+}
+
+// 조건부 AuthProvider 래퍼 컴포넌트
+function ConditionalAuthWrapper({ 
+  children, 
+  isPreview 
+}: { 
+  children: React.ReactNode
+  isPreview: boolean 
+}) {
+  if (isPreview) {
+    return <AuthProvider>{children}</AuthProvider>
+  }
+  return <>{children}</>
 }
 
 export async function generateMetadata({ params, searchParams }: NoticePageProps): Promise<Metadata> {
@@ -100,21 +115,23 @@ export default async function NoticePage({ params, searchParams }: NoticePagePro
 
   return (
     <MainLayout>
-      <Suspense 
-        fallback={
-          <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-              <p className="text-gray-600">공지사항을 불러오는 중...</p>
+      <ConditionalAuthWrapper isPreview={isPreview}>
+        <Suspense 
+          fallback={
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">공지사항을 불러오는 중...</p>
+              </div>
             </div>
-          </div>
-        }
-      >
-        <NoticeDetailClient 
-          noticeId={id} 
-          fallbackNotice={fallbackNotice}
-        />
-      </Suspense>
+          }
+        >
+          <NoticeDetailClient 
+            noticeId={id} 
+            fallbackNotice={fallbackNotice}
+          />
+        </Suspense>
+      </ConditionalAuthWrapper>
     </MainLayout>
   )
 } 

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/components/auth/AuthProvider'
+import { useOptionalAuth } from '@/components/auth/AuthProvider'
 import { Menu, X, User, LogOut, Settings } from 'lucide-react'
 import {
   DropdownMenu,
@@ -21,7 +21,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
   const mobileMenuRef = useRef<HTMLDivElement>(null)
-  const { user, userProfile, signOut, isAdmin, loading } = useAuth()
+  const { user, userProfile, signOut, isAdmin, loading } = useOptionalAuth()
 
   const navigation = [
     { name: '홈', href: '/' },

@@ -20,6 +20,19 @@ interface Notice {
   important: boolean
 }
 
+// API에서 받아오는 데이터 타입 정의
+interface ApiNotice {
+  id: number
+  title: string
+  content: string
+  category?: string
+  is_published: boolean
+  is_pinned?: boolean
+  views?: number
+  created_at: string
+  author?: string
+}
+
 export default function NoticesPage() {
   const [notices, setNotices] = useState<Notice[]>([])
   const [loading, setLoading] = useState(true)
@@ -38,7 +51,7 @@ export default function NoticesPage() {
         const data = await response.json()
         if (data.success && data.data) {
           // API 데이터를 컴포넌트에서 예상하는 형식으로 변환
-          const transformedNotices = data.data.map((notice: any) => ({
+          const transformedNotices = data.data.map((notice: ApiNotice) => ({
             id: notice.id,
             title: notice.title,
             content: notice.content,
