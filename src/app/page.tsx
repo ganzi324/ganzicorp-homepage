@@ -38,10 +38,14 @@ export default function HomePage() {
               </Button>
             </Link>
             <Link href="/contact">
-              <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-ganzicorp-primary font-semibold">
-                문의하기
-              </Button>
-            </Link>
+    <Button 
+      variant="outline" 
+      size="lg" 
+      className="border-2 border-white text-white hover:bg-white hover:text-ganzicorp-primary font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 bg-transparent backdrop-blur-sm"
+    >
+      문의하기
+    </Button>
+  </Link>
           </div>
           
           {/* 핵심 가치 카드 */}

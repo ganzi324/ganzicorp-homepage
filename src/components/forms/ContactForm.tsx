@@ -29,8 +29,6 @@ export default function ContactForm() {
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
-    reset,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
   })

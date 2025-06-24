@@ -3,35 +3,26 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useToast } from '@/hooks/use-toast'
+import { showSuccessToast, showErrorToast } from '@/lib/toast'
 import { Mail, CheckCircle } from 'lucide-react'
 
 export default function NewsletterSubscription() {
   const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isSubscribed, setIsSubscribed] = useState(false)
-  const { toast } = useToast()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     if (!email) {
-      toast({
-        title: "이메일을 입력해주세요",
-        description: "유효한 이메일 주소를 입력해주세요.",
-        variant: "destructive",
-      })
+      showErrorToast('유효한 이메일 주소를 입력해주세요.')
       return
     }
 
     // 간단한 이메일 유효성 검사
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
-      toast({
-        title: "유효하지 않은 이메일",
-        description: "올바른 이메일 형식을 입력해주세요.",
-        variant: "destructive",
-      })
+      showErrorToast('올바른 이메일 형식을 입력해주세요.')
       return
     }
 
@@ -42,17 +33,10 @@ export default function NewsletterSubscription() {
       await new Promise(resolve => setTimeout(resolve, 1000)) // 임시 지연
 
       setIsSubscribed(true)
-      toast({
-        title: "구독 완료!",
-        description: "뉴스레터 구독이 완료되었습니다. 최신 소식을 이메일로 받아보세요.",
-      })
+      showSuccessToast('뉴스레터 구독이 완료되었습니다. 최신 소식을 이메일로 받아보세요.')
       setEmail('')
     } catch {
-      toast({
-        title: "구독 실패",
-        description: "뉴스레터 구독 중 오류가 발생했습니다. 다시 시도해주세요.",
-        variant: "destructive",
-      })
+      showErrorToast('뉴스레터 구독 중 오류가 발생했습니다. 다시 시도해주세요.')
     } finally {
       setIsLoading(false)
     }
