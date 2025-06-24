@@ -1,9 +1,14 @@
+// Supabase 클라이언트 - 권장 방식으로 재작성
+// 클라이언트 컴포넌트에서 사용할 때는 utils/supabase/client.ts를 사용
+// 서버 컴포넌트에서 사용할 때는 utils/supabase/server.ts를 사용
+// 이 파일은 하위 호환성을 위해 유지 (기존 코드가 많이 사용 중)
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
-// Supabase 클라이언트 생성 (Realtime 설정 포함)
+// 레거시 클라이언트 (기존 코드 호환성 유지)
+// 새로운 코드에서는 utils/supabase/client.ts 또는 utils/supabase/server.ts 사용 권장
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   realtime: {
     params: {

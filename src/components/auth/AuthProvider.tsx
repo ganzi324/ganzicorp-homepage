@@ -1,8 +1,9 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
-import { User } from '@supabase/supabase-js'
-import { supabase } from '@/lib/supabase'
+import { createContext, useContext, useEffect, useState, useCallback } from 'react'
+import { createClient } from '@/utils/supabase/client'
+import type { User } from '@supabase/supabase-js'
+import { Profile } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 
 interface AuthContextType {
@@ -11,32 +12,24 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error?: string }>
   signOut: () => Promise<void>
   isAdmin: boolean
-  userProfile: UserProfile | null
+  userProfile: Profile | null
   profileLoading: boolean
-}
-
-interface UserProfile {
-  id: string
-  email: string
-  full_name: string | null
-  role: 'user' | 'admin' | 'super_admin'
-  created_at: string
-  updated_at: string
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [userProfile, setUserProfile] = useState<Profile | null>(null)
   const [profileLoading, setProfileLoading] = useState(false)
   const router = useRouter()
 
-  const isAdmin = userProfile?.role === 'admin' || userProfile?.role === 'super_admin'
+  // Supabase 클라이언트 인스턴스
+  const supabase = createClient()
 
-  // 사용자 프로필 조회 함수
-  const fetchUserProfile = async (userId: string) => {
+  // 사용자 프로필 가져오기
+  const fetchUserProfile = useCallback(async (userId: string) => {
     try {
       setProfileLoading(true)
       const { data, error } = await supabase
@@ -46,35 +39,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .single()
 
       if (error) {
-        console.error('Error fetching user profile:', error)
-        setUserProfile(null)
-        return null
+        console.error('프로필 가져오기 실패:', error)
+        return
       }
-      
+
       setUserProfile(data)
-      return data
     } catch (error) {
-      console.error('Exception in fetchUserProfile:', error)
-      setUserProfile(null)
-      return null
+      console.error('프로필 가져오기 오류:', error)
     } finally {
       setProfileLoading(false)
     }
-  }
+  }, [supabase])
 
   useEffect(() => {
     // 최초 세션 확인
     supabase.auth.getSession().then(({ data }) => {
       const session = data.session
       setUser(session?.user ?? null)
-      
+      setLoading(false)
+
       if (session?.user) {
         fetchUserProfile(session.user.id)
-      } else {
-        setUserProfile(null)
       }
-      
-      setLoading(false)
     })
 
     // 세션 변경 감지
@@ -87,12 +73,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUserProfile(null)
         setProfileLoading(false)
       }
+      
+      setLoading(false)
     })
 
     return () => {
-      listener.subscription.unsubscribe()
+      listener?.subscription.unsubscribe()
     }
-  }, [])
+  }, [supabase.auth, fetchUserProfile])
 
   const signIn = async (email: string, password: string) => {
     try {
@@ -101,16 +89,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         email,
         password,
       })
-
-      if (error) {
-        setLoading(false)
-        return { error: error.message }
-      }
-
-      return {}
-    } catch {
+      return { error: error?.message }
+    } catch (error) {
+      console.error('로그인 오류:', error)
+      return { error: error instanceof Error ? error.message : '로그인 중 오류가 발생했습니다.' }
+    } finally {
       setLoading(false)
-      return { error: '로그인 중 오류가 발생했습니다.' }
     }
   }
 
@@ -120,13 +104,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await supabase.auth.signOut()
       setUserProfile(null)
       setProfileLoading(false)
-      setLoading(false)
       router.push('/')
     } catch (error) {
-      console.error('Error signing out:', error)
+      console.error('로그아웃 오류:', error)
+    } finally {
       setLoading(false)
     }
   }
+
+  // 관리자 권한 확인 (슈퍼 어드민 포함)
+  const isAdmin = userProfile?.role === 'admin' || userProfile?.role === 'super_admin'
 
   const value = {
     user,

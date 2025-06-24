@@ -1,5 +1,7 @@
 import { supabase } from './supabase'
 import type { User } from '@supabase/supabase-js'
+import { createClient } from '@/utils/supabase/server'
+import { Profile } from '@/lib/supabase'
 
 export type UserRole = 'user' | 'admin' | 'super_admin'
 
@@ -150,113 +152,64 @@ export function onAuthStateChange(callback: (user: User | null) => void) {
   })
 }
 
-// 서버 측에서 사용자 인증 확인 (API 라우트용)
-export async function verifyAuth(request: Request): Promise<{
+// 서버 측에서 사용자 인증 확인 (API 라우트용) - Supabase 권장 방식
+export async function verifyAuth(_request: Request): Promise<{
   user: User | null
-  profile: UserProfile | null
+  profile: Profile | null
   isAuthenticated: boolean
   isAdmin: boolean
   isSuperAdmin: boolean
 }> {
   try {
-    let token: string | null = null
-
-    // 1. Authorization 헤더에서 Bearer 토큰 확인 (기존 방식 유지)
-    const authHeader = request.headers.get('Authorization')
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-      token = authHeader.split(' ')[1]
-    }
-
-    // 2. 쿠키에서 세션 토큰 확인 (새로운 방식)
-    if (!token) {
-      const cookieHeader = request.headers.get('cookie')
-      if (cookieHeader) {
-        // Supabase가 사용하는 쿠키 이름들을 확인
-        const cookies = cookieHeader.split(';').reduce((acc, cookie) => {
-          const [key, value] = cookie.trim().split('=')
-          if (key && value) acc[key] = decodeURIComponent(value)
-          return acc
-        }, {} as Record<string, string>)
-
-        // Supabase의 접근 토큰 쿠키들을 순서대로 확인
-        const tokenKeys = [
-          'sb-access-token',
-          'supabase-auth-token', 
-          'sb-auth-token',
-          `sb-${process.env.NEXT_PUBLIC_SUPABASE_URL?.split('//')[1]?.split('.')[0] || 'supabase'}-auth-token`
-        ]
-
-        for (const key of tokenKeys) {
-          if (cookies[key]) {
-            try {
-              // 쿠키 값이 JSON 형태일 수 있으므로 파싱 시도
-              const cookieValue = cookies[key]
-              if (cookieValue.startsWith('{')) {
-                const parsed = JSON.parse(cookieValue)
-                token = parsed.access_token || parsed.token
-              } else {
-                token = cookieValue
-              }
-              if (token) break
-            } catch {
-              // JSON 파싱 실패 시 원본 값 사용
-              token = cookies[key]
-              if (token) break
-            }
-          }
-        }
-      }
-    }
-
-    // 토큰이 없으면 인증 실패
-    if (!token) {
+    // Supabase 권장 방식으로 서버 클라이언트 생성
+    const supabase = await createClient()
+    
+    // 사용자 인증 확인 (쿠키에서 자동으로 세션 추출)
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    
+    if (authError || !user) {
       return {
         user: null,
         profile: null,
         isAuthenticated: false,
         isAdmin: false,
-        isSuperAdmin: false
+        isSuperAdmin: false,
       }
     }
 
-    const { data: { user }, error } = await supabase.auth.getUser(token)
-
-    if (error || !user) {
-      return {
-        user: null,
-        profile: null,
-        isAuthenticated: false,
-        isAdmin: false,
-        isSuperAdmin: false
-      }
-    }
-
-    // 사용자 프로필 가져오기
-    const { data: profile } = await supabase
+    // 사용자 프로필 조회
+    const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('*')
       .eq('id', user.id)
       .single()
 
-    const userRole = profile?.role || 'user'
-    const isAdminUser = userRole === 'admin' || userRole === 'super_admin'
-    const isSuperAdminUser = userRole === 'super_admin'
+    if (profileError) {
+      console.error('프로필 조회 실패:', profileError)
+      return {
+        user,
+        profile: null,
+        isAuthenticated: true,
+        isAdmin: false,
+        isSuperAdmin: false,
+      }
+    }
 
     return {
       user,
       profile,
       isAuthenticated: true,
-      isAdmin: isAdminUser,
-      isSuperAdmin: isSuperAdminUser
+      isAdmin: profile.role === 'admin' || profile.role === 'super_admin',
+      isSuperAdmin: profile.role === 'super_admin',
     }
   } catch (error) {
-    console.error('Error verifying auth:', error)
+    console.error('verifyAuth 오류:', error)
     return {
       user: null,
       profile: null,
       isAuthenticated: false,
       isAdmin: false,
-      isSuperAdmin: false
+      isSuperAdmin: false,
     }
   }
 } 

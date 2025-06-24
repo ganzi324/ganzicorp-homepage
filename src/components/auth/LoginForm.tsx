@@ -3,26 +3,23 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, LogIn, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { useOptionalAuth } from './AuthProvider'
+import { createClient } from '@/utils/supabase/client'
 import Link from 'next/link'
 import { loginSchema, LoginFormData } from '@/lib/schemas'
 
-interface LoginFormProps {
-  onSuccess?: () => void
-  redirectTo?: string
-}
-
-export default function LoginForm({ onSuccess, redirectTo }: LoginFormProps) {
+export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const { signIn } = useOptionalAuth()
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
+  const router = useRouter()
 
   const {
     register,
@@ -33,23 +30,31 @@ export default function LoginForm({ onSuccess, redirectTo }: LoginFormProps) {
   })
 
   const onSubmit = async (data: LoginFormData) => {
-    setIsLoading(true)
-    setError(null)
-
     try {
-      const result = await signIn(data.email, data.password)
-      
-      if (result.error) {
-        setError(result.error)
-      } else {
-        if (onSuccess) {
-          onSuccess()
-        }
-        if (redirectTo) {
-          window.location.href = redirectTo
-        }
+      setIsLoading(true)
+      setError('')
+      setSuccess('')
+
+      const supabase = createClient()
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      })
+
+      if (signInError) {
+        setError(signInError.message)
+        return
       }
-    } catch {
+
+      setSuccess('로그인이 완료되었습니다. 잠시 후 이동합니다...')
+      
+      // 잠시 후 리디렉션
+      setTimeout(() => {
+        router.push('/admin')
+      }, 1000)
+
+    } catch (err) {
+      console.error('로그인 오류:', err)
       setError('로그인 중 오류가 발생했습니다.')
     } finally {
       setIsLoading(false)
@@ -59,34 +64,36 @@ export default function LoginForm({ onSuccess, redirectTo }: LoginFormProps) {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="space-y-1">
-        <div className="flex items-center justify-center mb-4">
-          <LogIn className="h-8 w-8 text-primary" />
-        </div>
         <CardTitle className="text-2xl text-center">로그인</CardTitle>
         <CardDescription className="text-center">
-          GanziCorp 계정으로 로그인하세요
+          관리자 계정으로 로그인하세요
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {error && (
-            <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+      <CardContent className="space-y-4">
+        {error && (
+          <Alert variant="destructive">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+        
+        {success && (
+          <Alert className="border-green-500 text-green-700">
+            <AlertDescription>{success}</AlertDescription>
+          </Alert>
+        )}
 
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">이메일</Label>
             <Input
               id="email"
               type="email"
-              placeholder="이메일을 입력하세요"
+              placeholder="admin@example.com"
               {...register('email')}
               disabled={isLoading}
-              className={errors.email ? 'border-destructive' : ''}
             />
             {errors.email && (
-              <p className="text-sm text-destructive">{errors.email.message}</p>
+              <p className="text-sm text-red-500">{errors.email.message}</p>
             )}
           </div>
 
@@ -96,10 +103,9 @@ export default function LoginForm({ onSuccess, redirectTo }: LoginFormProps) {
               <Input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
-                placeholder="비밀번호를 입력하세요"
+                placeholder="••••••••"
                 {...register('password')}
                 disabled={isLoading}
-                className={errors.password ? 'border-destructive pr-10' : 'pr-10'}
               />
               <Button
                 type="button"
@@ -117,7 +123,7 @@ export default function LoginForm({ onSuccess, redirectTo }: LoginFormProps) {
               </Button>
             </div>
             {errors.password && (
-              <p className="text-sm text-destructive">{errors.password.message}</p>
+              <p className="text-sm text-red-500">{errors.password.message}</p>
             )}
           </div>
 
@@ -128,29 +134,22 @@ export default function LoginForm({ onSuccess, redirectTo }: LoginFormProps) {
                 로그인 중...
               </>
             ) : (
-              '로그인'
+              <>
+                <LogIn className="mr-2 h-4 w-4" />
+                로그인
+              </>
             )}
           </Button>
-
-          <div className="text-center text-sm">
-            <span className="text-muted-foreground">계정이 없으신가요? </span>
-            <Link
-              href="/auth/signup"
-              className="text-primary hover:underline font-medium"
-            >
-              회원가입
-            </Link>
-          </div>
-
-          <div className="text-center text-sm">
-            <Link
-              href="/auth/forgot-password"
-              className="text-muted-foreground hover:text-primary hover:underline"
-            >
-              비밀번호를 잊으셨나요?
-            </Link>
-          </div>
         </form>
+
+        <div className="text-center">
+          <Link 
+            href="/" 
+            className="text-sm text-muted-foreground hover:text-primary"
+          >
+            메인 페이지로 돌아가기
+          </Link>
+        </div>
       </CardContent>
     </Card>
   )
