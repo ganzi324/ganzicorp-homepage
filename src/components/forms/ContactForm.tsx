@@ -18,6 +18,7 @@ import {
 import { Send, Loader2 } from 'lucide-react'
 import { contactFormSchema, ContactFormData } from '@/lib/schemas'
 import { showSuccessToast, showErrorToast } from '@/lib/toast'
+import { getAllInquiryTypes } from '@/lib/constants'
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -139,11 +140,11 @@ export default function ContactForm() {
             <SelectValue placeholder="문의 유형을 선택해주세요" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="service">서비스 문의</SelectItem>
-            <SelectItem value="partnership">파트너십 문의</SelectItem>
-            <SelectItem value="support">기술 지원</SelectItem>
-            <SelectItem value="career">채용 문의</SelectItem>
-            <SelectItem value="general">일반 문의</SelectItem>
+            {getAllInquiryTypes().map((type) => (
+              <SelectItem key={type.value} value={type.value}>
+                {type.label}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
         {errors.inquiry_type && (

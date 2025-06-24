@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { INQUIRY_TYPE_VALUES } from './constants'
 
 // =====================================================================================
 // FORM DATA VALIDATION SCHEMAS (사용자 입력 검증용)
@@ -10,7 +11,10 @@ export const contactFormSchema = z.object({
   email: z.string().email('올바른 이메일 형식을 입력해주세요'),
   company: z.string().optional(),
   phone: z.string().optional(),
-  subject: z.string().min(1, '문의 유형을 선택해주세요'),
+  inquiry_type: z.enum(INQUIRY_TYPE_VALUES as [string, ...string[]], {
+    errorMap: () => ({ message: '올바른 문의 유형을 선택해주세요' })
+  }),
+  subject: z.string().min(1, '제목을 입력해주세요'),
   message: z.string().min(10, '메시지는 최소 10글자 이상 작성해주세요'),
 })
 
@@ -56,7 +60,7 @@ export type NoticeUpdateApiData = z.infer<typeof noticeUpdateApiSchema>
 
 // Contact to Inquiry API Schema (외부에서 문의 API 호출 시 검증용)
 export const inquiryCreateApiSchema = contactFormSchema.extend({
-  inquiry_type: z.string().default('general')
+  inquiry_type: z.enum(INQUIRY_TYPE_VALUES as [string, ...string[]]).default('general')
 })
 
 export type InquiryCreateApiData = z.infer<typeof inquiryCreateApiSchema>
@@ -84,7 +88,7 @@ export const adminInquirySchema = z.object({
   email: z.string().email('유효한 이메일 형식을 입력해주세요'),
   company: z.string().optional(),
   phone: z.string().optional(),
-  inquiry_type: z.string().default('general'),
+  inquiry_type: z.enum(INQUIRY_TYPE_VALUES as [string, ...string[]]).default('general'),
   subject: z.string().min(1, '제목을 입력해주세요'),
   message: z.string().min(1, '메시지를 입력해주세요'),
   status: z.enum(['pending', 'in_progress', 'resolved', 'cancelled']).default('pending')

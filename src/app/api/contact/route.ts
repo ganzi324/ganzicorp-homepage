@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { name, email, company, phone, subject, message } = validationResult.data
+    const { name, email, company, phone, inquiry_type, subject, message } = validationResult.data
 
     // inquiries 테이블에 저장 (관리자 페이지와 통합)
     // 모든 필드를 포함하여 저장
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
         email,
         company: company || null,
         phone: phone || null,
-        inquiry_type: 'contact_form',
+        inquiry_type,
         subject,
         message,
         status: 'pending'
@@ -62,6 +62,7 @@ export async function POST(request: NextRequest) {
       id: data[0].id,
       name,
       email,
+      inquiry_type,
       subject,
       timestamp: new Date().toISOString(),
     })

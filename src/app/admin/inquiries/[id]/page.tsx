@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, Mail, Phone, User, Calendar, MessageSquare, AlertTriangle } from 'lucide-react'
 import { useAuth } from '@/components/auth/AuthProvider'
+import { getInquiryTypeLabel } from '@/lib/constants'
 
 interface Inquiry {
   id: string
@@ -155,6 +156,8 @@ export default function AdminInquiryDetailPage() {
       return '날짜 형식 오류'
     }
   }
+
+
 
   // 로딩 중이거나 권한 확인 중
   if (authLoading || isAuthorized === null) {
@@ -309,7 +312,7 @@ export default function AdminInquiryDetailPage() {
           <CardContent className="space-y-4">
             <div>
               <label className="text-sm font-medium text-gray-600">문의 유형</label>
-              <p className="text-gray-900 mt-1">{inquiry.inquiry_type}</p>
+              <p className="text-gray-900 mt-1">{getInquiryTypeLabel(inquiry.inquiry_type)}</p>
             </div>
             <div>
               <label className="text-sm font-medium text-gray-600">제목</label>
