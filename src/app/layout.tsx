@@ -2,8 +2,8 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { Metadata } from 'next';
 import React from 'react';
-import { Toaster } from '@/components/ui/toaster';
 import StructuredData from '@/components/seo/StructuredData';
+import ToastProvider from '@/components/providers/ToastProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -83,7 +83,7 @@ export default function RootLayout({
           }}
         />
         <div id="root">{children}</div>
-        <Toaster />
+        <ToastProvider />
       </body>
     </html>
   );
